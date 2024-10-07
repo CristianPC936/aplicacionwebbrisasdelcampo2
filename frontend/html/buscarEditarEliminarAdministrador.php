@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscar, Editar y Dar de Baja a Administradores</title>
+    <title>Buscar, Editar y Dar de Baja a Usuarios</title>
     <link rel="stylesheet" href="../css/buscarEditarEliminarAdministrador.css">
 </head>
 <body>
     <header class="top-bar">
-        <h1>Buscar, Editar y Dar de Baja a Administradores</h1>
+        <h1>Buscar, Editar y Dar de Baja a Usuarios</h1>
     </header>
     <div class="container">
         <aside class="sidebar">
@@ -36,42 +36,82 @@
                 </ul>
             </nav>
         </aside>
-        
+
         <main class="main-content">
-            <!-- Botón de navegación -->
             <button class="nav-toggle" id="nav-toggle">
                 &#9776;
             </button>
 
-            <!-- Tabla de administradores -->
-            <table class="attendance-table">
+            <!-- Tabla de usuarios -->
+            <table class="attendance-table" id="usuariosTable">
                 <thead>
                     <tr>
-                        <th>Administrador</th>
-                        <th></th> <!-- Columna sin nombre -->
-                        <th></th> <!-- Columna sin nombre -->
+                        <th>Nombres y Apellidos</th>
+                        <th>Nombre de Usuario</th>
+                        <th>Rol</th>
+                        <th>Editar</th>
+                        <th>Dar de Baja</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Juan Pérez Rodríguez</td>
-                        <td><button class="edit-button">Editar</button></td>
-                        <td><button class="delete-button">Dar de Baja</button></td>
-                    </tr>
-                    <tr>
-                        <td>María López García</td>
-                        <td><button class="edit-button">Editar</button></td>
-                        <td><button class="delete-button">Dar de Baja</button></td>
-                    </tr>
-                    <tr>
-                        <td>Carlos Gómez Fernández</td>
-                        <td><button class="edit-button">Editar</button></td>
-                        <td><button class="delete-button">Dar de Baja</button></td>
-                    </tr>
+                <tbody id="usuariosTableBody">
+                    <!-- Aquí se insertarán las filas con los usuarios -->
                 </tbody>
             </table>
         </main>
     </div>
+
+    <!-- Modal para editar usuario -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h2>Editar Usuario</h2>
+            <form id="edit-form">
+                <label for="edit-primerNombre">Primer Nombre:</label>
+                <input type="text" id="edit-primerNombre" required>
+
+                <label for="edit-segundoNombre">Segundo Nombre:</label>
+                <input type="text" id="edit-segundoNombre">
+
+                <label for="edit-tercerNombre">Tercer Nombre:</label>
+                <input type="text" id="edit-tercerNombre">
+
+                <label for="edit-primerApellido">Primer Apellido:</label>
+                <input type="text" id="edit-primerApellido" required>
+
+                <label for="edit-segundoApellido">Segundo Apellido:</label>
+                <input type="text" id="edit-segundoApellido">
+
+                <label for="edit-nombreUsuario">Nombre de Usuario:</label>
+                <input type="text" id="edit-nombreUsuario" required>
+
+                <label for="edit-contrasena">Contraseña:</label>
+                <input type="password" id="edit-contrasena" placeholder="Dejar en blanco para no cambiarla">
+                
+                <button type="button" class="save-button">Guardar cambios</button>
+                <button type="button" class="cancel-button">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para eliminar usuario -->
+<div id="deleteModal" class="modal">
+    <div class="modal-content-delete">
+        <h2>¿Desea dar de baja a este usuario?</h2>
+        <div class="user-info">
+        <input type="hidden" id="delete-idUsuario">
+            <p><strong>Primer Nombre:</strong> <span id="delete-primerNombre"></span></p>
+            <p><strong>Segundo Nombre:</strong> <span id="delete-segundoNombre"></span></p>
+            <p><strong>Tercer Nombre:</strong> <span id="delete-tercerNombre"></span></p>
+            <p><strong>Primer Apellido:</strong> <span id="delete-primerApellido"></span></p>
+            <p><strong>Segundo Apellido:</strong> <span id="delete-segundoApellido"></span></p>
+            <p><strong>Nombre de Usuario:</strong> <span id="delete-nombreUsuario"></span></p>
+            <p><strong>Rol:</strong> <span id="delete-rolUsuario"></span></p>
+        </div>
+        <button class="cancel-button-delete">Cancelar</button>
+        <button class="delete-button-confirm">Dar de Baja</button>
+    </div>
+</div>
+
+
     <script src="../js/buscarEditarEliminarAdministrador.js"></script>
 </body>
 </html>

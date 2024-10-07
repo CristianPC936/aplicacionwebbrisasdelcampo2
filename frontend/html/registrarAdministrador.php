@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brisas del Campo - Registrar Administrador</title>
+    <title>Brisas del Campo - Registrar Usuario</title>
     <link rel="stylesheet" href="../css/registrarAdministrador.css">
 </head>
 <body>
     <header class="top-bar">
-        <h1>Registrar Administrador</h1>
+        <h1>Registrar Usuario</h1>
     </header>
     <div class="container">
         <aside class="sidebar">
@@ -45,7 +45,7 @@
                 </div>
                 <div class="input-group">
                     <label for="segundoNombre">Segundo Nombre:</label>
-                    <input type="text" id="segundoNombre" name="segundoNombre" required>
+                    <input type="text" id="segundoNombre" name="segundoNombre">
                 </div>
                 <div class="input-group">
                     <label for="tercerNombre">Tercer Nombre:</label>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="input-group">
                     <label for="segundoApellido">Segundo Apellido:</label>
-                    <input type="text" id="segundoApellido" name="segundoApellido" required>
+                    <input type="text" id="segundoApellido" name="segundoApellido">
                 </div>
                 <!-- Nuevos campos para nombre de usuario y contraseña -->
                 <div class="input-group">
@@ -68,7 +68,14 @@
                     <label for="contrasena">Contraseña:</label>
                     <input type="password" id="contrasena" name="contrasena" required>
                 </div>
-                <button class="register-button" type="submit">Registrar</button>
+                <!-- Select para el Rol de Usuario -->
+                <div class="input-group">
+                    <label for="rolUsuario">Rol de Usuario:</label>
+                    <select id="rolUsuario" name="rolUsuario" required>
+                        <!-- Aquí se podrían cargar dinámicamente las opciones -->
+                    </select>
+                </div>
+                <button class="register-button" type="submit" id="registerButton">Registrar</button>
             </form>
         </main>
     </div>
