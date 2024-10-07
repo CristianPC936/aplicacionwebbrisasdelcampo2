@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brisas del Campo - Registrar Administrador</title>
-    <link rel="stylesheet" href="../css/registrarAdministrador.css">
+    <title>Brisas del Campo - Registrar Estudiante</title>
+    <link rel="stylesheet" href="../css/registrarEstudiante.css">
 </head>
 <body>
     <header class="top-bar">
-        <h1>Registrar Administrador</h1>
+        <h1>Registrar Estudiante</h1>
     </header>
     <div class="container">
         <aside class="sidebar">
@@ -18,20 +18,20 @@
                 <ul>
                     <li>Gestión de Asistencia</li>
                     <ul>
-                        <li><a href="registrarAsistencia.html">Registrar</a></li>
-                        <li><a href="listadoYEdicionAsistencia.html">Listar o Editar</a></li>
-                        <li><a href="reporteAsistencia.html">Generar reportes</a></li>
+                        <li><a href="registrarAsistencia.php">Registrar</a></li>
+                        <li><a href="listadoYEdicionAsistencia.php">Listar o Editar</a></li>
+                        <li><a href="reporteAsistencia.php">Generar reportes</a></li>
                     </ul>
                     <li>Gestión de Notas</li>
                     <ul>
-                        <li><a href="registrarNotas.html">Registrar</a></li>
-                        <li><a href="listadoYEdicionNotas.html">Listar o Editar</a></li>
+                        <li><a href="registrarNotas.php">Registrar</a></li>
+                        <li><a href="listadoYEdicionNotas.php">Listar o Editar</a></li>
                     </ul>
                     <li>Gestión de Usuarios y Estudiantes</li>
                     <ul>
-                        <li><a href="gestionEstudiantes.html">Gestión de Estudiantes</a></li>
-                        <li><a href="gestionDocentes.html">Gestión de Docentes</a></li>
-                        <li><a href="gestionAdministradores.html">Gestión de Administradores</a></li>
+                        <li><a href="gestionEstudiantes.php">Gestión de Estudiantes</a></li>
+                        <li><a href="gestionDocentes.php">Gestión de Docentes</a></li>
+                        <li><a href="gestionAdministradores.php">Gestión de Administradores</a></li>
                     </ul>
                 </ul>
             </nav>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="input-group">
                     <label for="segundoNombre">Segundo Nombre:</label>
-                    <input type="text" id="segundoNombre" name="segundoNombre" required>
+                    <input type="text" id="segundoNombre" name="segundoNombre">
                 </div>
                 <div class="input-group">
                     <label for="tercerNombre">Tercer Nombre:</label>
@@ -57,21 +57,30 @@
                 </div>
                 <div class="input-group">
                     <label for="segundoApellido">Segundo Apellido:</label>
-                    <input type="text" id="segundoApellido" name="segundoApellido" required>
-                </div>
-                <!-- Nuevos campos para nombre de usuario y contraseña -->
-                <div class="input-group">
-                    <label for="nombreUsuario">Nombre de Usuario:</label>
-                    <input type="text" id="nombreUsuario" name="nombreUsuario" required>
+                    <input type="text" id="segundoApellido" name="segundoApellido">
                 </div>
                 <div class="input-group">
-                    <label for="contrasena">Contraseña:</label>
-                    <input type="password" id="contrasena" name="contrasena" required>
+                    <label for="grado">Grado:</label>
+                    <select id="grado" name="grado">
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="seccion">Sección:</label>
+                    <select id="seccion" name="seccion">
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="clave">Clave:</label>
+                    <input type="text" id="clave" name="clave" required>
+                </div>
+                <div class="input-group">
+                    <label for="correoElectronico">Correo Electrónico:</label>
+                    <input type="email" id="correoElectronico" name="correoElectronico" required>
                 </div>
                 <button class="register-button" type="submit">Registrar</button>
             </form>
         </main>
     </div>
-    <script src="../js/registrarAdministrador.js"></script>
+    <script src="../js/registrarEstudiante.js"></script>
 </body>
 </html>

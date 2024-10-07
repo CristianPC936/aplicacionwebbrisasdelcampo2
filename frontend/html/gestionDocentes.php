@@ -18,20 +18,20 @@
                 <ul>
                     <li>Gestión de Asistencia</li>
                     <ul>
-                        <li><a href="registrarAsistencia.html">Registrar</a></li>
-                        <li><a href="listadoYEdicionAsistencia.html">Listar o Editar</a></li>
-                        <li><a href="reporteAsistencia.html">Generar reportes</a></li>
+                        <li><a href="registrarAsistencia.php">Registrar</a></li>
+                        <li><a href="listadoYEdicionAsistencia.php">Listar o Editar</a></li>
+                        <li><a href="reporteAsistencia.php">Generar reportes</a></li>
                     </ul>
                     <li>Gestión de Notas</li>
                     <ul>
-                        <li><a href="registrarNotas.html">Registrar</a></li>
-                        <li><a href="listadoYEdicionNotas.html">Listar o Editar</a></li>
+                        <li><a href="registrarNotas.php">Registrar</a></li>
+                        <li><a href="listadoYEdicionNotas.php">Listar o Editar</a></li>
                     </ul>
                     <li>Gestión de Usuarios y Estudiantes</li>
                     <ul>
-                        <li><a href="gestionEstudiantes.html">Gestión de Estudiantes</a></li>
-                        <li><a href="gestionDocentes.html">Gestión de Docentes</a></li>
-                        <li><a href="gestionAdministradores.html">Gestión de Administradores</a></li>
+                        <li><a href="gestionEstudiantes.php">Gestión de Estudiantes</a></li>
+                        <li><a href="gestionDocentes.php">Gestión de Docentes</a></li>
+                        <li><a href="gestionAdministradores.php">Gestión de Administradores</a></li>
                     </ul>
                 </ul>
             </nav>
@@ -45,10 +45,10 @@
 
             <div class="teacher-management"> <!-- Cambiado de "student-management" a "teacher-management" -->
                 <div class="teacher-option"> <!-- Cambiado de "student-option" a "teacher-option" -->
-                    <a href="registrarDocente.html"><img src="../resources/userC.png" alt="Registrar Docente"></a>
+                    <a href="registrarDocente.php"><img src="../resources/userC.png" alt="Registrar Docente"></a>
                 </div>
                 <div class="teacher-option"> <!-- Cambiado de "student-option" a "teacher-option" -->
-                    <a href="buscarEditarEliminarDocente.html"><img src="../resources/userRUD.png" alt="Buscar/Editar/Eliminar Docente"></a>
+                    <a href="buscarEditarEliminarDocente.php"><img src="../resources/userRUD.png" alt="Buscar/Editar/Eliminar Docente"></a>
                 </div>
             </div>
         </main>

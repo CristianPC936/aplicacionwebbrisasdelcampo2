@@ -10,7 +10,7 @@
     <header>
         <div class="header-container">
             <h1>Escuela Oficial Rural Mixta Sector Brisas del Campo</h1>
-            <button onclick="window.location.href='html/login.html';">Ingresar</button>
+            <button onclick="window.location.href='html/login.php';">Ingresar</button>
         </div>
     </header>
     <section class="info-section">

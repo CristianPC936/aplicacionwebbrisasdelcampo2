@@ -8,12 +8,12 @@
 </head>
 <body>
     <div class="back-button">
-        <a href="index.html">&#8592; Volver</a>
+        <a href="index.php">&#8592; Volver</a>
     </div>
     <div class="login-container">
         <div class="login-box">
             <h2>Bienvenido a<br>E.O.R.M. Brisas del Campo</h2>
-            <form action="main_screen.html">
+            <form action="main_screen.php">
                 <input type="text" placeholder="Usuario" required>
                 <input type="password" placeholder="Contraseña" required>
                 <button type="submit">Iniciar Sesión</button>

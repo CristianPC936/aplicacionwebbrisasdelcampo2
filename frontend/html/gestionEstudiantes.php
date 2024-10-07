@@ -18,20 +18,20 @@
                 <ul>
                     <li>Gestión de Asistencia</li>
                     <ul>
-                        <li><a href="registrarAsistencia.html">Registrar</a></li>
-                        <li><a href="listadoYEdicionAsistencia.html">Listar o Editar</a></li>
-                        <li><a href="reporteAsistencia.html">Generar reportes</a></li>
+                        <li><a href="registrarAsistencia.php">Registrar</a></li>
+                        <li><a href="listadoYEdicionAsistencia.php">Listar o Editar</a></li>
+                        <li><a href="reporteAsistencia.php">Generar reportes</a></li>
                     </ul>
                     <li>Gestión de Notas</li>
                     <ul>
-                        <li><a href="registrarNotas.html">Registrar</a></li>
-                        <li><a href="listadoYEdicionNotas.html">Listar o Editar</a></li>
+                        <li><a href="registrarNotas.php">Registrar</a></li>
+                        <li><a href="listadoYEdicionNotas.php">Listar o Editar</a></li>
                     </ul>
                     <li>Gestión de Usuarios y Estudiantes</li>
                     <ul>
-                        <li><a href="gestionEstudiantes.html">Gestión de Estudiantes</a></li>
-                        <li><a href="gestionDocentes.html">Gestión de Docentes</a></li>
-                        <li><a href="gestionAdministradores.html">Gestión de Administradores</a></li>
+                        <li><a href="gestionEstudiantes.php">Gestión de Estudiantes</a></li>
+                        <li><a href="gestionDocentes.php">Gestión de Docentes</a></li>
+                        <li><a href="gestionAdministradores.php">Gestión de Administradores</a></li>
                     </ul>
                 </ul>
             </nav>
@@ -45,10 +45,10 @@
 
             <div class="student-management">
                 <div class="student-option">
-                    <a href="registrarEstudiante.html"><img src="../resources/studentC.png" alt="Registrar Estudiante"></a>
+                    <a href="registrarEstudiante.php"><img src="../resources/studentC.png" alt="Registrar Estudiante"></a>
                 </div>
                 <div class="student-option">
-                    <a href="buscarEditarEliminarEstudiante.html"><img src="../resources/studentRUD.png" alt="Buscar/Editar/Eliminar Estudiante"></a>
+                    <a href="buscarEditarEliminarEstudiante.php"><img src="../resources/studentRUD.png" alt="Buscar/Editar/Eliminar Estudiante"></a>
                 </div>
             </div>
         </main>
