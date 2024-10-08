@@ -30,8 +30,7 @@
                     <li>Gestión de Usuarios y Estudiantes</li>
                     <ul>
                         <li><a href="gestionEstudiantes.php">Gestión de Estudiantes</a></li>
-                        <li><a href="gestionDocentes.php">Gestión de Docentes</a></li>
-                        <li><a href="gestionAdministradores.php">Gestión de Administradores</a></li>
+                        <li><a href="gestionUsuarios.php">Gestión de Usuarios</a></li>
                     </ul>
                 </ul>
             </nav>
@@ -71,76 +70,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Diego Alejandro Ruiz Soto</td>
-                            <td>
-                                <select>
-                                    <option>Presente</option>
-                                    <option>Ausente</option>
-                                </select>
-                            </td>
-                            <td><input type="text"></td>
-                        </tr>
-                        <tr>
-                            <td>María Fernanda Castillo Pérez</td>
-                            <td>
-                                <select>
-                                    <option>Presente</option>
-                                    <option>Ausente</option>
-                                </select>
-                            </td>
-                            <td><input type="text"></td>
-                        </tr>
-                        <tr>
-                            <td>José Miguel Álvarez Fuentes</td>
-                            <td>
-                                <select>
-                                    <option>Presente</option>
-                                    <option>Ausente</option>
-                                </select>
-                            </td>
-                            <td><input type="text"></td>
-                        </tr>
-                        <tr>
-                            <td>Sofía Gabriela López Cáceres</td>
-                            <td>
-                                <select>
-                                    <option>Presente</option>
-                                    <option>Ausente</option>
-                                </select>
-                            </td>
-                            <td><input type="text"></td>
-                        </tr>
-                        <tr>
-                            <td>Carlos Esteban Morales Cáceres</td>
-                            <td>
-                                <select>
-                                    <option>Presente</option>
-                                    <option>Ausente</option>
-                                </select>
-                            </td>
-                            <td><input type="text"></td>
-                        </tr>
-                        <tr>
-                            <td>Ana Lucía Gómez Martínez</td>
-                            <td>
-                                <select>
-                                    <option>Presente</option>
-                                    <option>Ausente</option>
-                                </select>
-                            </td>
-                            <td><input type="text"></td>
-                        </tr>
-                        <tr>
-                            <td>Manuel Eduardo Navarro Barrios</td>
-                            <td>
-                                <select>
-                                    <option>Presente</option>
-                                    <option>Ausente</option>
-                                </select>
-                            </td>
-                            <td><input type="text"></td>
-                        </tr>
                     </tbody>
                 </table>
 

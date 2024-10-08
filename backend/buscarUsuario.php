@@ -31,7 +31,8 @@ $sql = "SELECT u.idUsuario, u.primerNombre, u.segundoNombre, u.tercerNombre,
         u.primerApellido, u.segundoApellido, u.nombreUsuario, r.nombreRol 
         FROM Usuario u 
         INNER JOIN Rol r ON u.idRol = r.idRol
-        WHERE u.cicloEscolar = ? AND u.estado = 1";
+        WHERE u.cicloEscolar = ? AND u.estado = 1
+        ORDER BY r.idRol, u.primerNombre";
 
 $stmt = $connection->prepare($sql);
 if (!$stmt) {

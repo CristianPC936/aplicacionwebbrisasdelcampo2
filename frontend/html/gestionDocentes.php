@@ -30,8 +30,7 @@
                     <li>Gestión de Usuarios y Estudiantes</li>
                     <ul>
                         <li><a href="gestionEstudiantes.php">Gestión de Estudiantes</a></li>
-                        <li><a href="gestionDocentes.php">Gestión de Docentes</a></li>
-                        <li><a href="gestionAdministradores.php">Gestión de Administradores</a></li>
+                        <li><a href="gestionUsuarios.php">Gestión de Usuarios</a></li>  
                     </ul>
                 </ul>
             </nav>

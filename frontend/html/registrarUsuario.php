@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brisas del Campo - Registrar Usuario</title>
-    <link rel="stylesheet" href="../css/registrarAdministrador.css">
+    <link rel="stylesheet" href="../css/registrarUsuario.css">
 </head>
 <body>
     <header class="top-bar">
@@ -30,8 +30,7 @@
                     <li>Gestión de Usuarios y Estudiantes</li>
                     <ul>
                         <li><a href="gestionEstudiantes.php">Gestión de Estudiantes</a></li>
-                        <li><a href="gestionDocentes.php">Gestión de Docentes</a></li>
-                        <li><a href="gestionAdministradores.php">Gestión de Administradores</a></li>
+                        <li><a href="gestionUsuarios.php">Gestión de Usuarios</a></li>
                     </ul>
                 </ul>
             </nav>
@@ -79,6 +78,6 @@
             </form>
         </main>
     </div>
-    <script src="../js/registrarAdministrador.js"></script>
+    <script src="../js/registrarUsuario.js"></script>
 </body>
 </html>

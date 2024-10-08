@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brisas del Campo - Gestión de Administradores</title>
-    <link rel="stylesheet" href="../css/gestionAdministradores.css">
+    <title>Brisas del Campo - Gestión de Usuarios</title>
+    <link rel="stylesheet" href="../css/gestionUsuarios.css">
 </head>
 <body>
     <header class="top-bar">
-        <h1>Gestión de Administradores</h1>
+        <h1>Gestión de Usuarios</h1>
     </header>
     <div class="container">
         <aside class="sidebar">
@@ -27,11 +27,10 @@
                         <li><a href="registrarNotas.php">Registrar</a></li>
                         <li><a href="listadoYEdicionNotas.php">Listar o Editar</a></li>
                     </ul>
-                    <li>Gestión de Usuarios y Docentes</li>
+                    <li>Gestión de Usuarios y Estudiantes</li>
                     <ul>
                         <li><a href="gestionEstudiantes.php">Gestión de Estudiantes</a></li>
-                        <li><a href="gestionDocentes.php">Gestión de Docentes</a></li>
-                        <li><a href="gestionAdministradores.php">Gestión de Administradores</a></li>
+                        <li><a href="gestionUsuarios.php">Gestión de Usuarios</a></li>
                     </ul>
                 </ul>
             </nav>
@@ -45,14 +44,17 @@
 
             <div class="admin-management">
                 <div class="admin-option">
-                    <a href="registrarAdministrador.php"><img src="../resources/adminC.png" alt="Registrar Administrador"></a>
+                    <a href="registrarUsuario.php"><img src="../resources/userC.png" alt="Registrar Administrador"></a>
                 </div>
                 <div class="admin-option">
-                    <a href="buscarEditarEliminarAdministrador.php"><img src="../resources/adminRUD.png" alt="Buscar/Editar/Eliminar Administrador"></a>
+                    <a href="buscarEditarEliminarUsuario.php"><img src="../resources/userRUD.png" alt="Buscar/Editar/Eliminar Usuario"></a>
+                </div>
+                <div class="admin-option">
+                    <a href="listarYAsignarDocente.php"><img src="../resources/teacherRU.png" alt="listar y asignar docente"></a>
                 </div>
             </div>
         </main>
     </div>
-    <script src="../js/gestionAdministradores.js"></script> <!-- Ruta actualizada -->
+    <script src="../js/gestionUsuarios.js"></script> <!-- Ruta actualizada -->
 </body>
 </html>
