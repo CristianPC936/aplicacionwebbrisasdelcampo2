@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brisas del Campo - Gestión de Usuarios</title>
-    <link rel="stylesheet" href="../css/gestionUsuarios.css">
+    <title>Brisas del Campo - Gestión de Estudiantes</title>
+    <link rel="stylesheet" href="../css/gestionEstudiantes.css">
 </head>
 <body>
     <header class="top-bar">
-        <h1>Gestión de Usuarios</h1>
+        <h1>Gestión de Estudiantes</h1>
     </header>
     <div class="container">
-        <aside class="sidebar">
+    <aside class="sidebar">
             <img src="../resources/school_icon.png" alt="EORM Brisas del Campo">
             <h2>Brisas del Campo</h2>
             <nav>
@@ -35,19 +35,13 @@
                 &#9776;
             </button>
 
-            <div class="admin-management">
-                <div class="admin-option">
-                    <a href="registrarUsuario.php"><img src="../resources/userC.png" alt="Registrar Administrador"></a>
-                </div>
-                <div class="admin-option">
-                    <a href="buscarEditarEliminarUsuario.php"><img src="../resources/userRUD.png" alt="Buscar/Editar/Eliminar Usuario"></a>
-                </div>
-                <div class="admin-option">
-                    <a href="listarYAsignarDocente.php"><img src="../resources/teacherRU.png" alt="listar y asignar docente"></a>
+            <div class="student-management">
+                <div class="student-option">
+                    <a href="buscarEditarEliminarEstudianteAdmin.php"><img src="../resources/studentRUD.png" alt="Buscar/Editar/Eliminar Estudiante"></a>
                 </div>
             </div>
         </main>
     </div>
-    <script src="../js/gestionUsuarios.js"></script> <!-- Ruta actualizada -->
+    <script src="../js/gestionEstudiantes.js"></script> <!-- Ruta actualizada -->
 </body>
 </html>

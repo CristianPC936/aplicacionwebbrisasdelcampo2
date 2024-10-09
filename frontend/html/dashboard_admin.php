@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brisas del Campo - Sistema de Gestión</title>
+    <title>Panel de Administrador - Brisas del Campo</title>
     <link rel="stylesheet" href="../css/main_screen.css">
 </head>
 <body>
     <header class="top-bar">
-        <h1>Bienvenido/a al Sistema</h1>
+        <h1>Bienvenido/a al Sistema - Administrador</h1>
     </header>
     <div class="container">
         <aside class="sidebar">
@@ -18,19 +18,12 @@
                 <ul>
                     <li>Gestión de Asistencia</li>
                     <ul>
-                        <li><a href="registrarAsistencia.php">Registrar</a></li>
-                        <li><a href="listadoYEdicionAsistencia.php">Listar o Editar</a></li>
                         <li><a href="reporteAsistencia.php">Generar reportes</a></li>
-                    </ul>
-                    <li>Gestión de Notas</li>
-                    <ul>
-                        <li><a href="registrarNotas.php">Registrar</a></li>
-                        <li><a href="listadoYEdicionNotas.php">Listar o Editar</a></li>
                     </ul>
                     <li>Gestión de Usuarios y Estudiantes</li>
                     <ul>
-                        <li><a href="gestionEstudiantes.php">Gestión de Estudiantes</a></li>
-                        <li><a href="gestionUsuarios.php">Gestión de Usuarios</a></li>
+                        <li><a href="gestionEstudiantesAdmin.php">Gestión de Estudiantes</a></li>
+                        <li><a href="gestionUsuarios.php">Gestión de Usuarios</a></li>  
                     </ul>
                 </ul>
             </nav>
@@ -47,6 +40,6 @@
             </div>
         </main>
     </div>
-    <script src="../js/main_screen.js"></script> <!-- Incluimos el archivo JavaScript -->
+    <script src="../js/main_screen.js"></script>
 </body>
 </html>

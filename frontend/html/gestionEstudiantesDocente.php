@@ -11,7 +11,7 @@
         <h1>Gestión de Estudiantes</h1>
     </header>
     <div class="container">
-        <aside class="sidebar">
+    <aside class="sidebar">
             <img src="../resources/school_icon.png" alt="EORM Brisas del Campo">
             <h2>Brisas del Campo</h2>
             <nav>
@@ -20,7 +20,6 @@
                     <ul>
                         <li><a href="registrarAsistencia.php">Registrar</a></li>
                         <li><a href="listadoYEdicionAsistencia.php">Listar o Editar</a></li>
-                        <li><a href="reporteAsistencia.php">Generar reportes</a></li>
                     </ul>
                     <li>Gestión de Notas</li>
                     <ul>
@@ -29,8 +28,7 @@
                     </ul>
                     <li>Gestión de Usuarios y Estudiantes</li>
                     <ul>
-                        <li><a href="gestionEstudiantes.php">Gestión de Estudiantes</a></li>
-                        <li><a href="gestionUsuarios.php">Gestión de Usuarios</a></li>
+                        <li><a href="gestionEstudiantesDocente.php">Gestión de Estudiantes</a></li>
                     </ul>
                 </ul>
             </nav>
@@ -47,7 +45,7 @@
                     <a href="registrarEstudiante.php"><img src="../resources/studentC.png" alt="Registrar Estudiante"></a>
                 </div>
                 <div class="student-option">
-                    <a href="buscarEditarEliminarEstudiante.php"><img src="../resources/studentRUD.png" alt="Buscar/Editar/Eliminar Estudiante"></a>
+                    <a href="buscarEditarEliminarEstudianteDocente.php"><img src="../resources/studentRUD.png" alt="Buscar/Editar/Eliminar Estudiante"></a>
                 </div>
             </div>
         </main>
