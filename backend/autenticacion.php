@@ -5,7 +5,7 @@ session_start();
 require_once 'config.php'; // Incluir la conexión a la base de datos
 
 // Definir el límite de intentos fallidos y el tiempo de bloqueo
-$limite_intentos = 5;
+$limite_intentos = 4;
 $tiempo_bloqueo = 300; // 300 segundos = 5 minutos
 
 // Verificar si la sesión tiene un contador de intentos
@@ -32,19 +32,22 @@ if ($_SESSION['intentos_fallidos'] >= $limite_intentos) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombreUsuario = $_POST['nombreUsuario'];
     $contrasenia = $_POST['password'];
+    $anio_actual = date('Y'); // Obtener el año en curso
 
     // Preparar la consulta SQL para validar el usuario
-    $sql = "SELECT U.idUsuario, U.nombreUsuario, U.contrasenia, U.idRol, R.nombreRol 
+    $sql = "SELECT U.idUsuario, U.nombreUsuario, U.contrasenia, U.idRol, U.cicloEscolar, U.estado, R.nombreRol 
             FROM Usuario U
             JOIN Rol R ON U.idRol = R.idRol
-            WHERE U.nombreUsuario = ?";
+            WHERE U.nombreUsuario = ?
+            AND U.cicloEscolar = ?
+            AND U.estado = 1"; // Solo usuarios activos y del año en curso
     
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $nombreUsuario);
+    $stmt->bind_param("si", $nombreUsuario, $anio_actual);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    // Verificar si el usuario existe
+    // Verificar si el usuario existe y cumple con las condiciones
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
 
@@ -59,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['nombreRol'] = $row['nombreRol'];
 
             // Si es docente, obtener grados y secciones
-            if ($row['nombreRol'] == 'docente') {
+            if ($row['nombreRol'] == 'Docente') {
                 $sqlGradoSeccion = "SELECT G.nombreGrado, S.nombreSeccion 
                                     FROM Grado_has_Usuario_has_Seccion GUHS
                                     JOIN Grado G ON GUHS.idGrado = G.idGrado
@@ -87,10 +90,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             session_regenerate_id(true);
 
             // Redirigir al dashboard correspondiente según el rol
-            if ($row['nombreRol'] == 'administrador') {
+            if ($row['nombreRol'] == 'Administrador') {
                 header("Location: ../frontend/html/dashboard_admin.php");
                 exit();
-            } elseif ($row['nombreRol'] == 'docente') {
+            } elseif ($row['nombreRol'] == 'Docente') {
                 header("Location: ../frontend/html/dashboard_docente.php");
                 exit();
             }
@@ -106,37 +109,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
     } else {
-        // Usuario no encontrado
-        $error = "Credenciales incorrectas.";
+        // Usuario no encontrado o no cumple con las condiciones
+        $error = "Credenciales incorrectas o el usuario no está activo para el ciclo actual.";
     }
 
     $stmt->close();
 }
 $conn->close();
-
-// Control de duración y expiración de la sesión
-$inactividad_maxima = 900; // 900 segundos = 15 minutos de inactividad
-
-if (isset($_SESSION['ultimo_acceso'])) {
-    $tiempo_inactivo = time() - $_SESSION['ultimo_acceso'];
-
-    if ($tiempo_inactivo > $inactividad_maxima) {
-        session_unset(); // Limpiar la sesión
-        session_destroy(); // Destruir la sesión
-        header("Location: ../frontend/html/login.php?error=sesion_expirada");
-        exit();
-    }
-}
-
-$_SESSION['ultimo_acceso'] = time(); // Actualizar el último acceso
-
-// Verificar si la sesión ha durado más de 1 hora
-if (isset($_SESSION['inicio_sesion']) && (time() - $_SESSION['inicio_sesion'] > 3600)) {
-    session_unset(); // Limpiar la sesión
-    session_destroy(); // Destruir la sesión
-    header("Location: ../frontend/html/login.php?error=sesion_expirada");
-    exit();
-}
 
 // Redirigir al formulario de login con un mensaje de error
 header("Location: ../frontend/html/login.php?error=true");

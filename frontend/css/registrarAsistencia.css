@@ -40,6 +40,7 @@ header.top-bar h1 {
     flex-shrink: 0; /* Evitar que el aside se reduzca */
     transition: transform 0.3s ease, width 0.3s ease, opacity 0.3s ease; /* Transición suave para el desplazamiento y opacidad */
     overflow: hidden; /* Ocultar cualquier contenido desbordante */
+    position: relative; /* Necesario para el footer */
 }
 
 .sidebar.hidden {
@@ -197,6 +198,30 @@ header.top-bar h1 {
 
 .nav-toggle:focus {
     outline: none;
+}
+
+/* Footer del aside */
+.user-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    background-color: #ffffff;
+    border-top: 1px solid #ffffff;
+}
+
+.user-footer-btn {
+    background: black;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    transition: opacity 0.3s ease; /* Transición suave de 0.3s para cambio de texto */
 }
 
 /* Ajustes para dispositivos móviles */
