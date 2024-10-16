@@ -4,8 +4,8 @@
 session_start();
 
 // Definir tiempos
-$inactividad_maxima = 30; // 15 minutos de inactividad
-$duracion_maxima_sesion = 60; // 1 hora de duración total de la sesión
+$inactividad_maxima = 900; // 15 minutos de inactividad
+$duracion_maxima_sesion = 3600; // 1 hora de duración total de la sesión
 
 // Verificar si existe la variable de último acceso
 if (isset($_SESSION['ultimo_acceso'])) {

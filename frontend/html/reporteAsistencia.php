@@ -16,7 +16,7 @@ verificar_acceso('Administrador');
 </head>
 <body>
     <header class="top-bar">
-        <h1>Generar Reportes de Asistencia</h1>
+        <h1>Generar Reporte de Asistencia</h1>
     </header>
     <div class="container">
     <aside class="sidebar">
@@ -24,9 +24,10 @@ verificar_acceso('Administrador');
             <h2>Brisas del Campo</h2>
             <nav>
                 <ul>
-                    <li>Gestión de Asistencia</li>
+                    <li>Generación de reportes</li>
                     <ul>
-                        <li><a href="reporteAsistencia.php">Generar reportes</a></li>
+                        <li><a href="reporteAsistencia.php">Reporte de Asistencia</a></li>
+                        <li><a href="reportePromedios.php">Reporte de Promedios</a></li>
                     </ul>
                     <li>Gestión de Usuarios y Estudiantes</li>
                     <ul>
@@ -52,7 +53,6 @@ verificar_acceso('Administrador');
                 <div class="parameter">
                     <label for="grade">Grado:</label>
                     <select id="grade">
-                        <option>Tercero</option>
                         <!-- Agregar más opciones según sea necesario -->
                     </select>
                 </div>
@@ -60,7 +60,6 @@ verificar_acceso('Administrador');
                 <div class="parameter">
                     <label for="section">Sección:</label>
                     <select id="section">
-                        <option>A</option>
                         <!-- Agregar más opciones según sea necesario -->
                     </select>
                 </div>

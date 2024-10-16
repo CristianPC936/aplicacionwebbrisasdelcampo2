@@ -23,9 +23,10 @@ verificar_acceso('Administrador');
             <h2>Brisas del Campo</h2>
             <nav>
                 <ul>
-                    <li>Gestión de Asistencia</li>
+                    <li>Generación de reportes</li>
                     <ul>
-                        <li><a href="reporteAsistencia.php">Generar reportes</a></li>
+                        <li><a href="reporteAsistencia.php">Reporte de Asistencia</a></li>
+                        <li><a href="reportePromedios.php">Reporte de Promedios</a></li>
                     </ul>
                     <li>Gestión de Usuarios y Estudiantes</li>
                     <ul>

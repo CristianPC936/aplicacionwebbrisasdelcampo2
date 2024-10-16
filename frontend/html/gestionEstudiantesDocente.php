@@ -32,6 +32,7 @@ verificar_acceso('Docente');
                     <ul>
                         <li><a href="registrarNotas.php">Registrar</a></li>
                         <li><a href="listadoYEdicionNotas.php">Listar o Editar</a></li>
+                        <li><a href="verYEnviarBoletines.php">Listado y envío de boletines</a></li>
                     </ul>
                     <li>Gestión de Usuarios y Estudiantes</li>
                     <ul>
