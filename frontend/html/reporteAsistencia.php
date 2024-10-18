@@ -20,6 +20,14 @@ verificar_acceso('Administrador');
     </header>
     <div class="container">
     <aside class="sidebar">
+    <div class="user-footer">
+            <button id="toggleDropdown" class="user-footer-btn" data-username="<?php echo $_SESSION['nombreUsuario']; ?>">
+                <div class="user-img-container">
+                    <img src="../resources/userIMG.png" alt="Icono de usuario">
+                </div>
+                <span class="user-text"><?php echo $_SESSION['nombreUsuario']; ?></span>
+            </button>
+        </div>
             <img src="../resources/school_icon.png" alt="EORM Brisas del Campo">
             <h2>Brisas del Campo</h2>
             <nav>
@@ -36,10 +44,6 @@ verificar_acceso('Administrador');
                     </ul>
                 </ul>
             </nav>
-            <!-- Botón para el cierre de sesión -->
-            <div class="user-footer">
-                <button id="toggleDropdown" class="user-footer-btn"><?php echo $_SESSION['nombreUsuario']; ?></button>
-            </div>
         </aside>
         
         <main class="main-content">
@@ -80,39 +84,5 @@ verificar_acceso('Administrador');
         </main>
     </div>
     <script src="../js/reporteAsistencia.js"></script>
-    <script>
-        const userFooterBtn = document.getElementById('toggleDropdown');
-        
-        // Función para hacer la transición suave
-        function transitionButton(newText) {
-            userFooterBtn.style.opacity = '0'; // Desaparecer el botón actual
-            setTimeout(() => {
-                userFooterBtn.textContent = newText; // Cambiar el texto
-                userFooterBtn.style.opacity = '1'; // Mostrar el nuevo texto
-            }, 300); // Tiempo de la transición de 0.3 segundos
-        }
-
-        // Mostrar "Cerrar sesión" en lugar del nombre de usuario
-        userFooterBtn.addEventListener('click', function (event) {
-            event.stopPropagation(); // Detener la propagación del evento para no activar el cierre inmediato
-            if (userFooterBtn.textContent === 'Cerrar sesión') {
-                window.location.href = '../../backend/logout.php'; // Redirigir al logout
-            } else {
-                transitionButton('Cerrar sesión');
-            }
-        });
-
-        // Si el usuario hace clic en cualquier parte de la página, restaurar el nombre del usuario
-        document.addEventListener('click', function () {
-            if (userFooterBtn.textContent === 'Cerrar sesión') {
-                transitionButton('<?php echo $_SESSION['nombreUsuario']; ?>');
-            }
-        });
-
-        // Detener la propagación del evento cuando el usuario haga clic en el botón de usuario
-        userFooterBtn.addEventListener('click', function (event) {
-            event.stopPropagation();
-        });
-    </script>
 </body>
 </html>

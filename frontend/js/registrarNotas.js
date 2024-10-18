@@ -93,6 +93,18 @@ async function cargarCursos() {
     }
 }
 
+// Usar addEventListener para que ambas funciones se ejecuten al cargar la página
+window.addEventListener('load', function() {
+    cargarGrados();
+    cargarSecciones();
+});
+
+// Añadir un event listener al select de grado para detectar cambios
+document.getElementById('grade').addEventListener('change', cargarCursos);
+
+// Asignar la función al botón de búsqueda
+document.querySelector('.search-button').addEventListener('click', listarNotas);
+
 // Función para listar las notas y realizar las solicitudes fetch
 async function listarNotas() {
     const idGrado = document.getElementById('grade').value;
@@ -141,9 +153,18 @@ async function listarNotas() {
             inputIdAlumno.value = alumno.idAlumno;
             fila.appendChild(inputIdAlumno);
 
+            // Filtrar los nombres y apellidos que no sean null o vacíos
+            const nombresCompletos = [
+                alumno.primerNombre,
+                alumno.segundoNombre,
+                alumno.tercerNombre,
+                alumno.primerApellido,
+                alumno.segundoApellido
+            ].filter(Boolean).join(' '); // Filtrar valores nulos/vacíos y unir con espacio
+
             // Columna 1: Nombres completos
             const columnaNombre = document.createElement('td');
-            columnaNombre.textContent = `${alumno.primerNombre} ${alumno.segundoNombre} ${alumno.tercerNombre} ${alumno.primerApellido} ${alumno.segundoApellido}`;
+            columnaNombre.textContent = nombresCompletos;
             fila.appendChild(columnaNombre);
             
             // Columna 2: Clave del alumno
@@ -167,73 +188,118 @@ async function listarNotas() {
     }
 }
 
-// Función para guardar las notas
 async function guardarNotas() {
-    const idCurso = document.getElementById('course').value; // Tomar el idCurso del select
-    const bimestre = document.getElementById('bimester').value; // Tomar el bimestre del select
-    const cicloEscolar = new Date().getFullYear(); // Obtener el año en curso
+    const tbody = document.querySelector('.attendance-table tbody');
+    const registrosNotas = [];
+    let notasInvalidas = false; // Variable para marcar si alguna nota es inválida
 
-    // Obtener todas las filas de la tabla de notas
-    const filas = document.querySelectorAll('.attendance-table tbody tr');
-    
-    // Crear un array para almacenar las notas de cada alumno
-    const notas = [];
+    // Recorre cada fila de la tabla para obtener los datos de las notas
+    tbody.querySelectorAll('tr').forEach(fila => {
+        const idAlumno = fila.querySelector('input[type="hidden"]').value; // Obtener idAlumno
+        const idCurso = document.getElementById('course').value;
+        const bimestre = document.getElementById('bimester').value;
+        const cicloEscolar = new Date().getFullYear();
+        const nota = fila.querySelector('input[type="text"]').value.trim();
 
-    filas.forEach(fila => {
-        const idAlumno = fila.querySelector('input[type="hidden"]').value; // Obtener el idAlumno de la columna oculta
-        const nota = fila.querySelector('input[type="text"]').value; // Obtener el valor de la nota del input
-
-        // Verificar que la nota no esté vacía y sea válida
-        if (!nota || isNaN(nota) || nota < 0 || nota > 100) {
-            alert('Por favor, ingrese una nota válida entre 0 y 100.');
+        // Validaciones de la nota
+        if (isNaN(nota) || !Number.isInteger(Number(nota))) {
+            alert(`Alguna nota tiene un error`);
+            notasInvalidas = true; // Marcar que hay una nota inválida
             return;
         }
 
-        // Agregar el registro de la nota al array de notas
-        notas.push({
+        if (nota < 1 || nota > 100) {
+            alert(`Alguna nota tiene un error.`);
+            notasInvalidas = true; // Marcar que hay una nota inválida
+            return;
+        }
+
+        // Si todas las validaciones pasan, agregar el registro
+        registrosNotas.push({
             idAlumno: idAlumno,
             idCurso: idCurso,
-            nota: parseInt(nota), // Asegurar que la nota sea un número
+            nota: parseInt(nota), // Convertir la nota a entero
             bimestre: bimestre,
             cicloEscolar: cicloEscolar
         });
     });
 
-    // Crear el JSON con las notas
-    const data = { notas: notas };
+    // Verificar si alguna nota fue inválida
+    if (notasInvalidas) {
+        return; // Detener la ejecución si hay notas inválidas
+    }
 
+    // Verificar si hay registros válidos antes de proceder
+    if (registrosNotas.length === 0) {
+        alert('No hay notas válidas para registrar.');
+        return;
+    }
+
+    // Crear el objeto JSON con las notas a enviar
+    const notasJSON = {
+        notas: registrosNotas
+    };
+
+    // Enviar la solicitud POST a la función serverless
     try {
-        // Realizar la solicitud POST a la función serverless
         const response = await fetch('http://localhost:8888/.netlify/functions/crearNota', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(notasJSON)
         });
 
-        if (response.ok) {
-            alert('Notas registradas exitosamente.');
-        } else {
+        if (!response.ok) {
             throw new Error('Error al registrar las notas');
         }
+
+        const data = await response.json();
+        alert('Notas registradas exitosamente');
     } catch (error) {
-        console.error('Error al guardar las notas:', error);
-        alert('Hubo un error al intentar registrar las notas.');
+        console.error('Error al registrar las notas:', error);
+        alert('No se pudo registrar las notas');
     }
 }
 
 // Asignar la función al botón de guardar
 document.querySelector('.save-button').addEventListener('click', guardarNotas);
 
-// Usar addEventListener para que ambas funciones se ejecuten al cargar la página
-window.addEventListener('load', function() {
-    cargarGrados();
-    cargarSecciones();
+document.addEventListener('DOMContentLoaded', function () {
+    const userFooterBtn = document.getElementById('toggleDropdown');
+    const userText = userFooterBtn.querySelector('.user-text'); // Seleccionamos solo el texto del botón
+    const originalUsername = userFooterBtn.getAttribute('data-username'); // Guardamos el valor del nombre de usuario original
+
+    // Función para hacer la transición suave del texto
+    function transitionButton(newText) {
+        userText.style.transition = 'opacity 0.3s'; // Transición suave para el texto
+        userText.style.opacity = '0'; // Desaparecer el texto actual
+
+        setTimeout(() => {
+            userText.textContent = newText; // Cambiar el texto
+            userText.style.opacity = '1'; // Mostrar el nuevo texto
+        }, 300); // Tiempo de la transición de 0.3 segundos
+    }
+
+    // Mostrar "Cerrar sesión" en lugar del nombre de usuario
+    userFooterBtn.addEventListener('click', function (event) {
+        event.stopPropagation(); // Detener la propagación del evento para no activar el cierre inmediato
+        if (userText.textContent === 'Cerrar sesión') {
+            window.location.href = '../../backend/logout.php'; // Redirigir al logout
+        } else {
+            transitionButton('Cerrar sesión');
+        }
+    });
+
+    // Si el usuario hace clic en cualquier parte de la página, restaurar el nombre del usuario
+    document.addEventListener('click', function () {
+        if (userText.textContent === 'Cerrar sesión') {
+            transitionButton(originalUsername); // Restauramos el nombre de usuario original desde el atributo
+        }
+    });
+
+    // Detener la propagación del evento cuando el usuario haga clic en el botón de usuario
+    userFooterBtn.addEventListener('click', function (event) {
+        event.stopPropagation();
+    });
 });
-
-// Añadir un event listener al select de grado para detectar cambios
-document.getElementById('grade').addEventListener('change', cargarCursos);
-
-// Asignar la función al botón de búsqueda
-document.querySelector('.search-button').addEventListener('click', listarNotas);

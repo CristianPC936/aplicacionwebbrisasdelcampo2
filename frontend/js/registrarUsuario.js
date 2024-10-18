@@ -33,9 +33,6 @@ async function cargarRoles() {
     }
 }
 
-// Ejecutar la función cargarRoles cuando la página cargue
-window.addEventListener('load', cargarRoles);
-
 document.getElementById('registerButton').addEventListener('click', async function (event) {
     // Prevenir el envío del formulario y que se limpie automáticamente
     event.preventDefault();
@@ -105,7 +102,6 @@ document.getElementById('registerButton').addEventListener('click', async functi
 
         if (response.ok) {
             alert("Usuario registrado exitosamente.");
-            
             // Limpiar el formulario después del registro exitoso
             document.getElementById('primerNombre').value = '';
             document.getElementById('segundoNombre').value = '';
@@ -115,7 +111,6 @@ document.getElementById('registerButton').addEventListener('click', async functi
             document.getElementById('nombreUsuario').value = '';
             document.getElementById('contrasena').value = '';
             document.getElementById('rolUsuario').value = '';
-            
         } else {
             alert("Error al registrar el usuario: " + result.message);
         }
@@ -123,6 +118,11 @@ document.getElementById('registerButton').addEventListener('click', async functi
         console.error("Error al registrar el usuario:", error);
         alert("Hubo un error al intentar registrar el usuario.");
     }
+});
+
+// Usar addEventListener para que ambas funciones se ejecuten al cargar la página
+window.addEventListener('load', function() {
+    cargarRoles();
 });
 
 // Función para validar la seguridad de la contraseña
@@ -135,3 +135,42 @@ function esContrasenaSegura(contrasena) {
 
     return contrasena.length >= longitudMinima && tieneMayuscula && tieneMinuscula && tieneNumero && tieneCaracterEspecial;
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const userFooterBtn = document.getElementById('toggleDropdown');
+    const userText = userFooterBtn.querySelector('.user-text'); // Seleccionamos solo el texto del botón
+    const originalUsername = userFooterBtn.getAttribute('data-username'); // Guardamos el valor del nombre de usuario original
+
+    // Función para hacer la transición suave del texto
+    function transitionButton(newText) {
+        userText.style.transition = 'opacity 0.3s'; // Transición suave para el texto
+        userText.style.opacity = '0'; // Desaparecer el texto actual
+
+        setTimeout(() => {
+            userText.textContent = newText; // Cambiar el texto
+            userText.style.opacity = '1'; // Mostrar el nuevo texto
+        }, 300); // Tiempo de la transición de 0.3 segundos
+    }
+
+    // Mostrar "Cerrar sesión" en lugar del nombre de usuario
+    userFooterBtn.addEventListener('click', function (event) {
+        event.stopPropagation(); // Detener la propagación del evento para no activar el cierre inmediato
+        if (userText.textContent === 'Cerrar sesión') {
+            window.location.href = '../../backend/logout.php'; // Redirigir al logout
+        } else {
+            transitionButton('Cerrar sesión');
+        }
+    });
+
+    // Si el usuario hace clic en cualquier parte de la página, restaurar el nombre del usuario
+    document.addEventListener('click', function () {
+        if (userText.textContent === 'Cerrar sesión') {
+            transitionButton(originalUsername); // Restauramos el nombre de usuario original desde el atributo
+        }
+    });
+
+    // Detener la propagación del evento cuando el usuario haga clic en el botón de usuario
+    userFooterBtn.addEventListener('click', function (event) {
+        event.stopPropagation();
+    });
+});

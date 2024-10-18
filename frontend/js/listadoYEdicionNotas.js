@@ -126,9 +126,18 @@ async function listarNotas() {
                 inputIdNotas.value = notaData.idNotas;
                 fila.appendChild(inputIdNotas);
 
+                // Filtrar los nombres y apellidos que no sean null o vacíos
+                const nombresCompletos = [
+                    notaData.primerNombre,
+                    notaData.segundoNombre,
+                    notaData.tercerNombre,
+                    notaData.primerApellido,
+                    notaData.segundoApellido
+                ].filter(Boolean).join(' '); // Filtrar valores nulos/vacíos y unir con espacio
+
                 // Columna 1: Nombres completos
                 const columnaNombre = document.createElement('td');
-                columnaNombre.textContent = `${notaData.primerNombre} ${notaData.segundoNombre} ${notaData.tercerNombre} ${notaData.primerApellido} ${notaData.segundoApellido}`;
+                columnaNombre.textContent = nombresCompletos;
                 fila.appendChild(columnaNombre);
                 
                 // Columna 2: Clave del alumno
@@ -155,36 +164,56 @@ async function listarNotas() {
     }
 }
 
-// Función para guardar las notas
+// Función para guardar las notas (edición)
 async function guardarNotas() {
     // Obtener todas las filas de la tabla de notas
     const filas = document.querySelectorAll('.attendance-table tbody tr');
     
     // Crear un array para almacenar las notas de cada alumno
     const notas = [];
+    let notasInvalidas = false; // Variable para marcar si alguna nota es inválida
 
+    // Recorrer cada fila de la tabla para obtener los datos de las notas
     filas.forEach(fila => {
         const idNotas = fila.querySelector('input[type="hidden"]').value; // Obtener el idNotas de la columna oculta
-        const nota = fila.querySelector('input[type="text"]').value; // Obtener el valor de la nota del input
+        const nota = fila.querySelector('input[type="text"]').value.trim(); // Obtener el valor de la nota del input
 
-        // Verificar que la nota no esté vacía y sea válida
-        if (!nota || isNaN(nota) || nota < 0 || nota > 100) {
-            alert('Por favor, ingrese una nota válida entre 0 y 100.');
+        // Validaciones de la nota
+        if (isNaN(nota) || !Number.isInteger(Number(nota))) {
+            alert(`Alguna nota tiene un error`);
+            notasInvalidas = true; // Marcar que hay una nota inválida
             return;
         }
 
-        // Agregar el registro de la nota al array de notas
+        if (nota < 1 || nota > 100) {
+            alert(`Alguna nota tiene un error`);
+            notasInvalidas = true; // Marcar que hay una nota inválida
+            return;
+        }
+
+        // Si todas las validaciones pasan, agregar el registro
         notas.push({
             idNotas: idNotas,
-            nota: parseInt(nota) // Asegurar que la nota sea un número
+            nota: parseInt(nota) // Asegurar que la nota sea un número entero
         });
     });
 
-    // Crear el JSON con las notas
+    // Verificar si alguna nota fue inválida
+    if (notasInvalidas) {
+        return; // Detener la ejecución si hay notas inválidas
+    }
+
+    // Verificar si hay registros válidos antes de proceder
+    if (notas.length === 0) {
+        alert('No hay notas válidas para actualizar.');
+        return;
+    }
+
+    // Crear el JSON con las notas a enviar
     const data = { notas: notas };
 
+    // Enviar la solicitud POST a la función serverless
     try {
-        // Realizar la solicitud POST a la función serverless
         const response = await fetch('http://localhost:8888/.netlify/functions/editarNota', {
             method: 'POST',
             headers: {
@@ -219,6 +248,41 @@ document.querySelector('.search-button').addEventListener('click', listarNotas);
 // Asignar la función al botón de guardar
 document.querySelector('.save-button').addEventListener('click', guardarNotas);
 
+document.addEventListener('DOMContentLoaded', function () {
+    const userFooterBtn = document.getElementById('toggleDropdown');
+    const userText = userFooterBtn.querySelector('.user-text'); // Seleccionamos solo el texto del botón
+    const originalUsername = userFooterBtn.getAttribute('data-username'); // Guardamos el valor del nombre de usuario original
 
+    // Función para hacer la transición suave del texto
+    function transitionButton(newText) {
+        userText.style.transition = 'opacity 0.3s'; // Transición suave para el texto
+        userText.style.opacity = '0'; // Desaparecer el texto actual
 
+        setTimeout(() => {
+            userText.textContent = newText; // Cambiar el texto
+            userText.style.opacity = '1'; // Mostrar el nuevo texto
+        }, 300); // Tiempo de la transición de 0.3 segundos
+    }
 
+    // Mostrar "Cerrar sesión" en lugar del nombre de usuario
+    userFooterBtn.addEventListener('click', function (event) {
+        event.stopPropagation(); // Detener la propagación del evento para no activar el cierre inmediato
+        if (userText.textContent === 'Cerrar sesión') {
+            window.location.href = '../../backend/logout.php'; // Redirigir al logout
+        } else {
+            transitionButton('Cerrar sesión');
+        }
+    });
+
+    // Si el usuario hace clic en cualquier parte de la página, restaurar el nombre del usuario
+    document.addEventListener('click', function () {
+        if (userText.textContent === 'Cerrar sesión') {
+            transitionButton(originalUsername); // Restauramos el nombre de usuario original desde el atributo
+        }
+    });
+
+    // Detener la propagación del evento cuando el usuario haga clic en el botón de usuario
+    userFooterBtn.addEventListener('click', function (event) {
+        event.stopPropagation();
+    });
+});
