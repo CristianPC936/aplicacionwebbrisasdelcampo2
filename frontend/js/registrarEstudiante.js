@@ -135,6 +135,7 @@ async function registrarEstudiante(event) {
 
         if (response.ok) {
             alert("Estudiante registrado exitosamente.");
+            document.querySelector('.register-form').reset();
         } else {
             alert("Error al registrar el estudiante: " + result.message);
         }

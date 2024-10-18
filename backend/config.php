@@ -1,16 +1,19 @@
 <?php
-// Archivo: backend/config.php
+// Configuración de la base de datos
 
-$host = "serveo.net";
-$user = "root";
-$password = ""; // Contraseña vacía
-$dbname = "pruebaproyecto";
-$port = 13306;
+$servername = "cristian.clceaygw4k9c.us-east-1.rds.amazonaws.com"; // Reemplaza por el endpoint de tu instancia de RDS
+$username = "admin"; // Reemplaza con el usuario de la base de datos
+$password = "uy2McxjaXinFXgF"; // Reemplaza con la contraseña de la base de datos
+$dbname = "pruebaproyecto"; // El nombre de la base de datos que creaste en RDS
+$port = 3306; // El puerto, normalmente es 3306 para MySQL
 
-$conn = new mysqli($host, $user, $password, $dbname, $port);
+// Crear conexión
+$conn = new mysqli($servername, $username, $password, $dbname, $port);
 
-// Verificar si la conexión fue exitosa
+// Verificar conexión
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
-?>
+
+
+

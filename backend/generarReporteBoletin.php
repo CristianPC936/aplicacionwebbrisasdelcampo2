@@ -48,7 +48,7 @@ $stmtEstudiante->close();
 $sqlNotas = "
     SELECT C.nombreCurso, N.bimestre, N.nota 
     FROM Notas N 
-    JOIN Curso C ON N.idCurso = C.idCurso 
+    JOIN curso C ON N.idCurso = C.idCurso 
     JOIN Alumno A ON N.idAlumno = A.idAlumno 
     WHERE N.idAlumno = ? AND N.cicloEscolar = ? AND A.idGrado = ?
 ";
