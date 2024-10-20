@@ -217,7 +217,7 @@ function limpiarCamposModal() {
 // Función para llenar el select con los grados
 async function cargarGrados() {
     try {
-        const response = await fetch('http://localhost:8888/.netlify/functions/leerGrado');
+        const response = await fetch('https://as0o0gl0d5.execute-api.us-east-1.amazonaws.com/leerGrado');
         
         if (!response.ok) {
             throw new Error('Error en la solicitud');
@@ -244,7 +244,7 @@ async function cargarGrados() {
 // Función para llenar el select con las secciones
 async function cargarSecciones() {
     try {
-        const response = await fetch('http://localhost:8888/.netlify/functions/leerSeccion');
+        const response = await fetch('https://as0o0gl0d5.execute-api.us-east-1.amazonaws.com/leerSeccion');
         
         if (!response.ok) {
             throw new Error('Error en la solicitud');

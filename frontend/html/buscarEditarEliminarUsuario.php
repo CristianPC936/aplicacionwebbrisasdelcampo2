@@ -94,8 +94,8 @@ verificar_acceso('Administrador');
                 <label for="edit-contrasena">Contraseña:</label>
                 <input type="password" id="edit-contrasena" placeholder="Dejar en blanco para no cambiarla">
                 
-                <button type="button" class="save-button">Guardar cambios</button>
                 <button type="button" class="cancel-button">Cancelar</button>
+                <button type="button" class="save-button">Guardar cambios</button>
             </form>
         </div>
     </div>

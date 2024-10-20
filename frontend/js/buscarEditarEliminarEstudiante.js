@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // Función para llenar el select con los grados
 async function cargarGrados() {
     try {
-        const response = await fetch('http://localhost:8888/.netlify/functions/leerGrado');
+        const response = await fetch('https://as0o0gl0d5.execute-api.us-east-1.amazonaws.com/leerGrado');
         
         if (!response.ok) {
             throw new Error('Error en la solicitud');
@@ -72,7 +72,7 @@ async function cargarGrados() {
 // Función para llenar el select con las secciones
 async function cargarSecciones() {
     try {
-        const response = await fetch('http://localhost:8888/.netlify/functions/leerSeccion');
+        const response = await fetch('https://as0o0gl0d5.execute-api.us-east-1.amazonaws.com/leerSeccion');
         
         if (!response.ok) {
             throw new Error('Error en la solicitud');
@@ -106,7 +106,7 @@ async function buscarEstudiantes(event) {
     const cicloEscolar = new Date().getFullYear(); // Obtener el año en curso
 
     // Construir la URL con los parámetros idGrado, idSeccion y cicloEscolar
-    const url = `http://localhost:8888/.netlify/functions/leerAlumnoCC?idGrado=${idGrado}&idSeccion=${idSeccion}&cicloEscolar=${cicloEscolar}`;
+    const url = `https://as0o0gl0d5.execute-api.us-east-1.amazonaws.com/leerAlumnoConCorreo?idGrado=${idGrado}&idSeccion=${idSeccion}&cicloEscolar=${cicloEscolar}`;
 
     try {
         // Realizar la solicitud fetch
@@ -313,7 +313,7 @@ async function guardarCambios(idAlumno) {
 
     try {
         // Realizar solicitud fetch para guardar los cambios
-        const response = await fetch('http://localhost:8888/.netlify/functions/editarAlumno', {
+        const response = await fetch('https://15eqv9i01e.execute-api.us-east-1.amazonaws.com/editarAlumno', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(estudiante)
@@ -336,7 +336,7 @@ async function eliminarAlumno(idAlumno) {
 
     try {
         // Enviar la solicitud para eliminar el alumno
-        const response = await fetch('http://localhost:8888/.netlify/functions/eliminarAlumno', {
+        const response = await fetch('https://85zywfrnle.execute-api.us-east-1.amazonaws.com/eliminarAlumno', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ idAlumno: idAlumno })

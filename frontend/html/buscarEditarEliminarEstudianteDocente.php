@@ -117,9 +117,9 @@ verificar_acceso('Docente');
                 
                 <label for="edit-correoElectronico">Correo Electrónico:</label>
                 <input type="email" id="edit-correoElectronico" required>
-                
-                <button type="button" class="save-button">Guardar cambios</button>
+
                 <button type="button" class="cancel-button">Cancelar</button>
+                <button type="button" class="save-button">Guardar cambios</button>
             </form>
         </div>
     </div>

@@ -6,7 +6,7 @@ document.getElementById('nav-toggle').addEventListener('click', function() {
 // Función para llenar el select con los grados
 async function cargarGrados() {
     try {
-        const response = await fetch('http://localhost:8888/.netlify/functions/leerGrado');
+        const response = await fetch('https://as0o0gl0d5.execute-api.us-east-1.amazonaws.com/leerGrado');
         
         if (!response.ok) {
             throw new Error('Error en la solicitud');
@@ -33,7 +33,7 @@ async function cargarGrados() {
 // Función para llenar el select con las secciones
 async function cargarSecciones() {
     try {
-        const response = await fetch('http://localhost:8888/.netlify/functions/leerSeccion');
+        const response = await fetch('https://as0o0gl0d5.execute-api.us-east-1.amazonaws.com/leerSeccion');
         
         if (!response.ok) {
             throw new Error('Error en la solicitud');
@@ -71,7 +71,7 @@ async function listarAsistencia() {
 
     try {
         // Primera solicitud fetch: verificar si existe registro de asistencia
-        const urlAsistencia = `http://localhost:8888/.netlify/functions/leerAsistencia?idGrado=${idGrado}&idSeccion=${idSeccion}&fecha=${fecha}`;
+        const urlAsistencia = `https://as0o0gl0d5.execute-api.us-east-1.amazonaws.com/leerAsistencia?idGrado=${idGrado}&idSeccion=${idSeccion}&fecha=${fecha}`;
         const responseAsistencia = await fetch(urlAsistencia);
         
         if (!responseAsistencia.ok) {
@@ -86,7 +86,7 @@ async function listarAsistencia() {
         }
 
         // Segunda solicitud fetch: leer tipos de asistencia
-        const urlTipoAsistencia = `http://localhost:8888/.netlify/functions/leerTipoAsistencia`;
+        const urlTipoAsistencia = `https://as0o0gl0d5.execute-api.us-east-1.amazonaws.com/leerTipoAsistencia`;
         const responseTipoAsistencia = await fetch(urlTipoAsistencia);
         
         if (!responseTipoAsistencia.ok) {
@@ -177,7 +177,7 @@ async function editarAsistencia() {
     console.log('Datos enviados:', JSON.stringify(jsonData)); // Mostrar en la consola el JSON generado
 
     try {
-        const response = await fetch('http://localhost:8888/.netlify/functions/editarAsistencia', {
+        const response = await fetch('https://15eqv9i01e.execute-api.us-east-1.amazonaws.com/editarAsistencia', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -5,7 +5,7 @@ document.getElementById('nav-toggle').addEventListener('click', function() {
 
 async function cargarRoles() {
     try {
-        const response = await fetch('http://localhost:8888/.netlify/functions/leerRol');
+        const response = await fetch('https://as0o0gl0d5.execute-api.us-east-1.amazonaws.com/leerRol');
         
         // Verificar si la respuesta fue exitosa
         if (!response.ok) {

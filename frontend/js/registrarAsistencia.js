@@ -6,7 +6,7 @@ document.getElementById('nav-toggle').addEventListener('click', function() {
 // Función para llenar el select con los grados
 async function cargarGrados() {
     try {
-        const response = await fetch('http://localhost:8888/.netlify/functions/leerGrado');
+        const response = await fetch('https://as0o0gl0d5.execute-api.us-east-1.amazonaws.com/leerGrado');
         
         if (!response.ok) {
             throw new Error('Error en la solicitud');
@@ -33,7 +33,7 @@ async function cargarGrados() {
 // Función para llenar el select con las secciones
 async function cargarSecciones() {
     try {
-        const response = await fetch('http://localhost:8888/.netlify/functions/leerSeccion');
+        const response = await fetch('https://as0o0gl0d5.execute-api.us-east-1.amazonaws.com/leerSeccion');
         
         if (!response.ok) {
             throw new Error('Error en la solicitud');
@@ -72,7 +72,7 @@ async function listarAsistencia() {
 
     try {
         // Primera solicitud fetch: verificar si existe registro de asistencia
-        const urlAsistencia = `http://localhost:8888/.netlify/functions/leerAsistencia?idGrado=${idGrado}&idSeccion=${idSeccion}&fecha=${fecha}`;
+        const urlAsistencia = `https://as0o0gl0d5.execute-api.us-east-1.amazonaws.com/leerAsistencia?idGrado=${idGrado}&idSeccion=${idSeccion}&fecha=${fecha}`;
         const responseAsistencia = await fetch(urlAsistencia);
         
         if (!responseAsistencia.ok) {
@@ -87,7 +87,7 @@ async function listarAsistencia() {
         }
 
         // Segunda solicitud fetch: leer alumnos del grado y sección seleccionados
-        const urlAlumno = `http://localhost:8888/.netlify/functions/leerAlumno?idGrado=${idGrado}&idSeccion=${idSeccion}&cicloEscolar=${cicloEscolar}`;
+        const urlAlumno = `https://as0o0gl0d5.execute-api.us-east-1.amazonaws.com/leerAlumno?idGrado=${idGrado}&idSeccion=${idSeccion}&cicloEscolar=${cicloEscolar}`;
         const responseAlumno = await fetch(urlAlumno);
         
         if (!responseAlumno.ok) {
@@ -97,7 +97,7 @@ async function listarAsistencia() {
         const alumnos = await responseAlumno.json();
 
         // Tercera solicitud fetch: leer tipos de asistencia
-        const urlTipoAsistencia = `http://localhost:8888/.netlify/functions/leerTipoAsistencia`;
+        const urlTipoAsistencia = `https://as0o0gl0d5.execute-api.us-east-1.amazonaws.com/leerTipoAsistencia`;
         const responseTipoAsistencia = await fetch(urlTipoAsistencia);
         
         if (!responseTipoAsistencia.ok) {
@@ -186,7 +186,7 @@ function guardarAsistencia() {
     console.log(asistenciaJSON);
 
     // Enviar la solicitud POST a la función serverless
-    fetch('http://localhost:8888/.netlify/functions/crearAsistencia', {
+    fetch('https://q6aor9s71g.execute-api.us-east-1.amazonaws.com/crearAsistencia', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

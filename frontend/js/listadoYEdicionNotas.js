@@ -6,7 +6,7 @@ document.getElementById('nav-toggle').addEventListener('click', function() {
 // Función para llenar el select con los grados
 async function cargarGrados() {
     try {
-        const response = await fetch('http://localhost:8888/.netlify/functions/leerGrado');
+        const response = await fetch('https://as0o0gl0d5.execute-api.us-east-1.amazonaws.com/leerGrado');
         
         if (!response.ok) {
             throw new Error('Error en la solicitud');
@@ -36,7 +36,7 @@ async function cargarGrados() {
 // Función para llenar el select con las secciones
 async function cargarSecciones() {
     try {
-        const response = await fetch('http://localhost:8888/.netlify/functions/leerSeccion');
+        const response = await fetch('https://as0o0gl0d5.execute-api.us-east-1.amazonaws.com/leerSeccion');
         
         if (!response.ok) {
             throw new Error('Error en la solicitud');
@@ -70,7 +70,7 @@ async function cargarCursos() {
 
     try {
         // Hacer la solicitud fetch a la función leerCurso con el idGrado
-        const response = await fetch(`http://localhost:8888/.netlify/functions/leerCurso?idGrado=${idGrado}`);
+        const response = await fetch(`https://as0o0gl0d5.execute-api.us-east-1.amazonaws.com/leerCurso?idGrado=${idGrado}`);
 
         if (!response.ok) {
             throw new Error('Error en la solicitud de cursos');
@@ -102,7 +102,7 @@ async function listarNotas() {
 
     try {
         // Primera solicitud fetch: verificar si ya existen notas registradas
-        const urlNotas = `http://localhost:8888/.netlify/functions/leerNota?idCurso=${idCurso}&bimestre=${bimestre}&idGrado=${idGrado}&idSeccion=${idSeccion}`;
+        const urlNotas = `https://as0o0gl0d5.execute-api.us-east-1.amazonaws.com/leerNota?idCurso=${idCurso}&bimestre=${bimestre}&idGrado=${idGrado}&idSeccion=${idSeccion}`;
         const responseNotas = await fetch(urlNotas);
         
         if (!responseNotas.ok) {
@@ -214,7 +214,7 @@ async function guardarNotas() {
 
     // Enviar la solicitud POST a la función serverless
     try {
-        const response = await fetch('http://localhost:8888/.netlify/functions/editarNota', {
+        const response = await fetch('https://15eqv9i01e.execute-api.us-east-1.amazonaws.com/editarNota', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
