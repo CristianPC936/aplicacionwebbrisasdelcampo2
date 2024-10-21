@@ -37,6 +37,10 @@ document.getElementById('registerButton').addEventListener('click', async functi
     // Prevenir el envío del formulario y que se limpie automáticamente
     event.preventDefault();
 
+    const button = document.querySelector('.register-button'); // Seleccionar el botón de registro
+    button.disabled = true; // Deshabilitar el botón
+    button.style.opacity = "0.5"; // Atenuar el botón
+
     // Obtener los datos del formulario
     const primerNombre = document.getElementById('primerNombre').value.trim();
     const segundoNombre = document.getElementById('segundoNombre').value.trim();
@@ -57,6 +61,8 @@ document.getElementById('registerButton').addEventListener('click', async functi
     // Validar campos obligatorios
     if (!primerNombre || !primerApellido || !nombreUsuario || !contrasena) {
         alert("Por favor, llene todos los campos obligatorios.");
+        button.disabled = false; // Restaurar el botón
+        button.style.opacity = "1";
         return;
     }
 
@@ -65,12 +71,16 @@ document.getElementById('registerButton').addEventListener('click', async functi
         (tercerNombre && !nombreRegex.test(tercerNombre)) || !nombreRegex.test(primerApellido) || 
         (segundoApellido && !nombreRegex.test(segundoApellido))) {
         alert("Los nombres y apellidos solo deben contener letras del abecedario español.");
+        button.disabled = false; // Restaurar el botón
+        button.style.opacity = "1";
         return;
     }
 
     // Validar seguridad de la contraseña
     if (!esContrasenaSegura(contrasena)) {
         alert("La contraseña no es segura. Debe contener al menos:\n- 8 caracteres\n- Una letra mayúscula\n- Una letra minúscula\n- Un número\n- Un carácter especial");
+        button.disabled = false; // Restaurar el botón
+        button.style.opacity = "1";
         return;
     }
 
@@ -117,6 +127,10 @@ document.getElementById('registerButton').addEventListener('click', async functi
     } catch (error) {
         console.error("Error al registrar el usuario:", error);
         alert("Hubo un error al intentar registrar el usuario.");
+    } finally {
+        // Habilitar el botón nuevamente y restaurar su opacidad
+        button.disabled = false;
+        button.style.opacity = "1";
     }
 });
 

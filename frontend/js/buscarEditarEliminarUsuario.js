@@ -100,6 +100,10 @@ function limpiarCamposEdicion() {
 
 // Función para guardar los cambios del usuario editado
 async function guardarCambios(idUsuario) {
+    const button = document.querySelector('.save-button'); // Seleccionar el botón de guardar
+    button.disabled = true; // Deshabilitar el botón
+    button.style.opacity = "0.5"; // Atenuar el botón
+
     // Obtener los valores de los campos del formulario de edición
     const primerNombre = document.getElementById('edit-primerNombre').value.trim();
     const segundoNombre = document.getElementById('edit-segundoNombre').value.trim();
@@ -115,6 +119,8 @@ async function guardarCambios(idUsuario) {
     // Validar campos obligatorios
     if (!primerNombre || !primerApellido || !nombreUsuario) {
         alert("Por favor, llene todos los campos obligatorios.");
+        button.disabled = false; // Restaurar el botón
+        button.style.opacity = "1";
         return;
     }
 
@@ -123,6 +129,8 @@ async function guardarCambios(idUsuario) {
         (tercerNombre && !nombreRegex.test(tercerNombre)) || !nombreRegex.test(primerApellido) || 
         (segundoApellido && !nombreRegex.test(segundoApellido))) {
         alert("Los nombres y apellidos solo deben contener letras del abecedario español.");
+        button.disabled = false; // Restaurar el botón
+        button.style.opacity = "1";
         return;
     }
 
@@ -165,8 +173,13 @@ async function guardarCambios(idUsuario) {
     } catch (error) {
         console.error("Error al actualizar el usuario:", error);
         alert("Hubo un error al intentar actualizar el usuario.");
+    } finally {
+        // Habilitar el botón nuevamente y restaurar su opacidad
+        button.disabled = false;
+        button.style.opacity = "1";
     }
 }
+
 
 // Función para abrir el modal de eliminación y mostrar la información del usuario
 function openDeleteModal(usuario) {
@@ -190,6 +203,10 @@ function openDeleteModal(usuario) {
 }
 
 async function eliminarUsuario() {
+    const button = document.querySelector('.delete-button-confirm'); // Seleccionar el botón de confirmación de eliminación
+    button.disabled = true; // Deshabilitar el botón
+    button.style.opacity = "0.5"; // Atenuar el botón
+
     const idUsuario = document.getElementById('delete-idUsuario').value; // Leer idUsuario desde el campo oculto
     const data = { idUsuario };
 
@@ -214,9 +231,12 @@ async function eliminarUsuario() {
     } catch (error) {
         console.error("Error al dar de baja al usuario:", error);
         alert("Hubo un error al intentar dar de baja al usuario.");
+    } finally {
+        // Habilitar el botón nuevamente y restaurar su opacidad
+        button.disabled = false;
+        button.style.opacity = "1";
     }
 }
-
 
 // Agregar el evento al botón "Eliminar" del modal de eliminación
 document.querySelector('.delete-button-confirm').addEventListener('click', eliminarUsuario);

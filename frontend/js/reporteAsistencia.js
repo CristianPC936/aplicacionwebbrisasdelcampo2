@@ -58,6 +58,10 @@ async function cargarSecciones() {
 }
 
 document.querySelector('.generate-button').addEventListener('click', async function() {
+    const button = document.querySelector('.generate-button'); // Seleccionar el botón "Generar"
+    button.disabled = true; // Deshabilitar el botón
+    button.style.opacity = "0.5"; // Atenuar el botón
+
     const grade = document.getElementById('grade').value;
     const section = document.getElementById('section').value;
     const fromDate = document.getElementById('from').value;
@@ -66,6 +70,8 @@ document.querySelector('.generate-button').addEventListener('click', async funct
     // Verificar que los campos no estén vacíos antes de enviar la solicitud
     if (!grade || !section || !fromDate || !toDate) {
         alert('Por favor, complete todos los campos antes de generar el reporte.');
+        button.disabled = false; // Restaurar el botón
+        button.style.opacity = "1";
         return;
     }
 
@@ -96,13 +102,35 @@ document.querySelector('.generate-button').addEventListener('click', async funct
     } catch (error) {
         console.error('Error en la solicitud:', error);
         alert('Ocurrió un error en la solicitud.');
+    } finally {
+        // Habilitar el botón nuevamente y restaurar su opacidad
+        button.disabled = false;
+        button.style.opacity = "1";
     }
 });
+
+function cargarFechas() {
+    const fechaActual = new Date();
+
+    // Obtener el primer día del mes en curso
+    const primerDia = new Date(fechaActual.getFullYear(), fechaActual.getMonth(), 1);
+    // Obtener el último día del mes en curso
+    const ultimoDia = new Date(fechaActual.getFullYear(), fechaActual.getMonth() + 1, 0);
+
+    // Formatear las fechas en formato yyyy-mm-dd
+    const formatoPrimerDia = primerDia.toISOString().split('T')[0];
+    const formatoUltimoDia = ultimoDia.toISOString().split('T')[0];
+
+    // Asignar las fechas a los inputs
+    document.getElementById('from').value = formatoPrimerDia;
+    document.getElementById('to').value = formatoUltimoDia;
+}
 
 // Ejecutar las funciones al cargar la página
 window.addEventListener('load', function() {
     cargarGrados();
     cargarSecciones();
+    cargarFechas();
 });
 
 document.addEventListener('DOMContentLoaded', function () {

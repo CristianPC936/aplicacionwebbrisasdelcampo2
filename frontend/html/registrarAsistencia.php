@@ -69,7 +69,7 @@ verificar_acceso('Docente');
                 </select>
 
                 <label for="date">Día:</label>
-                <input type="date" id="date" value="2024-05-21">
+                <input type="date" id="date">
 
                 <button class="search-button">Buscar</button>
             </div>

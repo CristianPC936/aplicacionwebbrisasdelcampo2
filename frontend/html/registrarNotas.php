@@ -75,7 +75,7 @@ verificar_acceso('Docente');
                 </select>
 
                 <label for="bimester">Bimestre:</label>
-                <input type = "text" id="bimester">
+                <input type = "number" id="bimester">
                     <!-- Agregar más opciones según sea necesario -->
                 </select>
 

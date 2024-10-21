@@ -58,6 +58,10 @@ async function cargarSecciones() {
 }
 
 document.querySelector('.generate-button').addEventListener('click', async function() {
+    const button = document.querySelector('.generate-button'); // Seleccionar el botón "Generar"
+    button.disabled = true; // Deshabilitar el botón
+    button.style.opacity = "0.5"; // Atenuar el botón
+
     const grade = document.getElementById('grade').value;
     const section = document.getElementById('section').value;
     const bimester = document.getElementById('bimester').value;
@@ -66,6 +70,8 @@ document.querySelector('.generate-button').addEventListener('click', async funct
     // Verificar que los campos no estén vacíos antes de enviar la solicitud
     if (!grade || !section || !bimester) {
         alert('Por favor, complete todos los campos antes de generar el reporte.');
+        button.disabled = false; // Restaurar el botón
+        button.style.opacity = "1";
         return;
     }
 
@@ -96,6 +102,10 @@ document.querySelector('.generate-button').addEventListener('click', async funct
     } catch (error) {
         console.error('Error en la solicitud:', error);
         alert('Ocurrió un error en la solicitud.');
+    } finally {
+        // Habilitar el botón nuevamente y restaurar su opacidad
+        button.disabled = false;
+        button.style.opacity = "1";
     }
 });
 

@@ -96,9 +96,16 @@ async function cargarSecciones() {
     }
 }
 
-// Función para buscar estudiantes
 async function buscarEstudiantes(event) {
     event.preventDefault(); // Evitar que se recargue la página al hacer clic en el botón
+
+    const button = document.querySelector('.search-button'); // Seleccionar el botón de búsqueda
+    button.disabled = true; // Deshabilitar el botón
+    button.style.opacity = "0.5"; // Atenuar el botón
+
+    // Limpiar la tabla antes de llenarla con los nuevos datos
+    const tbody = document.querySelector('.attendance-table tbody');
+    tbody.innerHTML = ''; // Limpiar cualquier fila previa
 
     // Obtener los valores de los selects de grado y sección
     const idGrado = document.getElementById('grade').value;
@@ -117,10 +124,6 @@ async function buscarEstudiantes(event) {
 
         // Parsear la respuesta JSON
         const estudiantes = await response.json();
-
-        // Limpiar la tabla antes de llenarla con los nuevos datos
-        const tbody = document.querySelector('.attendance-table tbody');
-        tbody.innerHTML = ''; // Limpiar cualquier fila previa
 
         // Iterar sobre los estudiantes y agregar filas a la tabla
         estudiantes.forEach(estudiante => {
@@ -178,8 +181,15 @@ async function buscarEstudiantes(event) {
     } catch (error) {
         console.error('Error al buscar los estudiantes:', error);
         alert('Hubo un error al buscar los estudiantes.');
+    } finally {
+        // Habilitar el botón nuevamente y restaurar su opacidad
+        button.disabled = false;
+        button.style.opacity = "1";
     }
 }
+
+// Asignar la función al botón "Buscar Estudiantes"
+document.querySelector('.search-button').addEventListener('click', buscarEstudiantes);
 
 // Function to open the modal and fill the form with student data
 function openEditModal(student) {
@@ -206,6 +216,12 @@ function openEditModal(student) {
     newSaveButton.addEventListener('click', function () {
         guardarCambios(student.idAlumno);
     });
+}
+
+// Function to close the modal
+function closeModal() {
+    const modal = document.getElementById('editModal');
+    modal.classList.remove('show'); // Ocultar el modal removiendo la clase 'show'
 }
 
 // Function to open the delete modal and show student data for deletion
@@ -235,22 +251,23 @@ function openDeleteModal(student) {
     });
 }
 
-// Function to close the modal
-function closeModal() {
-    const modal = document.getElementById('editModal');
-    modal.classList.remove('show'); // Ocultar el modal removiendo la clase 'show'
-}
-
 // Function to close the delete modal
 function closeDeleteModal() {
     const modal = document.getElementById('deleteModal');
     modal.classList.remove('show'); // Ocultar el modal de eliminación
 }
 
+// Attach the event listener to the cancel button for deletion
+document.querySelector('.cancel-button-delete').addEventListener('click', closeDeleteModal);
+
 // Function to validate and save changes
 async function guardarCambios(idAlumno) {
     const modal = document.getElementById('editModal');
     const form = modal.querySelector('form');
+    const button = modal.querySelector('.save-button'); // Seleccionar el botón "Guardar"
+
+    button.disabled = true; // Deshabilitar el botón
+    button.style.opacity = "0.5"; // Atenuar el botón
 
     // Obtener valores de los inputs
     const primerNombre = form.querySelector('#edit-primerNombre').value;
@@ -267,36 +284,48 @@ async function guardarCambios(idAlumno) {
     // Validación de primer nombre
     if (!primerNombre || !nameRegex.test(primerNombre)) {
         alert('Por favor ingrese un primer nombre válido.');
+        button.disabled = false; // Restaurar el botón
+        button.style.opacity = "1";
         return;
     }
 
     // Validación de primer apellido
     if (!primerApellido || !nameRegex.test(primerApellido)) {
         alert('Por favor ingrese un primer apellido válido.');
+        button.disabled = false; // Restaurar el botón
+        button.style.opacity = "1";
         return;
     }
 
     // Validación de segundo nombre
     if (segundoNombre && !nameRegex.test(segundoNombre)) {
         alert('Por favor ingrese un segundo nombre válido.');
+        button.disabled = false; // Restaurar el botón
+        button.style.opacity = "1";
         return;
     }
 
     // Validación de tercer nombre
     if (tercerNombre && !nameRegex.test(tercerNombre)) {
         alert('Por favor ingrese un tercer nombre válido.');
+        button.disabled = false; // Restaurar el botón
+        button.style.opacity = "1";
         return;
     }
 
     // Validación de segundo apellido
     if (segundoApellido && !nameRegex.test(segundoApellido)) {
         alert('Por favor ingrese un segundo apellido válido.');
+        button.disabled = false; // Restaurar el botón
+        button.style.opacity = "1";
         return;
     }
 
     // Validación del correo electrónico
     if (!correoElectronico || !emailRegex.test(correoElectronico)) {
         alert('Por favor ingrese un correo electrónico válido.');
+        button.disabled = false; // Restaurar el botón
+        button.style.opacity = "1";
         return;
     }
 
@@ -327,12 +356,21 @@ async function guardarCambios(idAlumno) {
         }
     } catch (error) {
         console.error('Error al guardar los cambios:', error);
+        alert('Hubo un error al intentar guardar los cambios.');
+    } finally {
+        // Restaurar el botón al finalizar
+        button.disabled = false;
+        button.style.opacity = "1";
     }
 }
 
 // Function to delete a student
 async function eliminarAlumno(idAlumno) {
     const modal = document.getElementById('deleteModal');
+    const button = modal.querySelector('.delete-button-confirm'); // Seleccionar el botón "Eliminar"
+
+    button.disabled = true; // Deshabilitar el botón
+    button.style.opacity = "0.5"; // Atenuar el botón
 
     try {
         // Enviar la solicitud para eliminar el alumno
@@ -350,17 +388,16 @@ async function eliminarAlumno(idAlumno) {
         }
     } catch (error) {
         console.error('Error al dar de baja al estudiante:', error);
+        alert('Hubo un error al intentar dar de baja al estudiante.');
+    } finally {
+        // Habilitar el botón nuevamente y restaurar su opacidad
+        button.disabled = false;
+        button.style.opacity = "1";
     }
 }
 
 // Attach the event listener to the cancel button for editing
 document.querySelector('.cancel-button').addEventListener('click', closeModal);
-
-// Attach the event listener to the cancel button for deletion
-document.querySelector('.cancel-button-delete').addEventListener('click', closeDeleteModal);
-
-// Asignar la función al botón "Buscar Estudiantes"
-document.querySelector('.search-button').addEventListener('click', buscarEstudiantes);
 
 // Ejecutar las funciones cuando se carga la página
 window.addEventListener('load', function() {

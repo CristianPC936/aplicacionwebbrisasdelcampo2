@@ -94,6 +94,14 @@ async function cargarCursos() {
 }
 // Función para listar las notas y realizar las solicitudes fetch
 async function listarNotas() {
+    const button = document.querySelector('.search-button');
+    button.disabled = true; // Deshabilitar el botón
+    button.style.opacity = "0.5"; // Atenuar el botón
+
+    // Limpiar la tabla antes de llenarla
+    const tbody = document.querySelector('.attendance-table tbody');
+    tbody.innerHTML = ''; // Limpiar cualquier fila previa
+
     const idGrado = document.getElementById('grade').value;
     const idSeccion = document.getElementById('section').value;
     const idCurso = document.getElementById('course').value;
@@ -112,9 +120,6 @@ async function listarNotas() {
         const dataNotas = await responseNotas.json();
         
         if (dataNotas.length > 0) {
-            // Limpiar la tabla antes de llenarla
-            const tbody = document.querySelector('.attendance-table tbody');
-            tbody.innerHTML = ''; // Limpiar cualquier fila previa
 
             // Iterar sobre las notas y crear filas para la tabla
             dataNotas.forEach(notaData => {
@@ -161,11 +166,19 @@ async function listarNotas() {
         }
     } catch (error) {
         console.error('Error al listar las notas:', error);
+    } finally {
+        // Habilitar el botón nuevamente y restaurar su opacidad
+        button.disabled = false;
+        button.style.opacity = "1";
     }
 }
 
 // Función para guardar las notas (edición)
 async function guardarNotas() {
+    const button = document.querySelector('.save-button');
+    button.disabled = true; // Deshabilitar el botón
+    button.style.opacity = "0.5"; // Atenuar el botón
+
     // Obtener todas las filas de la tabla de notas
     const filas = document.querySelectorAll('.attendance-table tbody tr');
     
@@ -200,12 +213,16 @@ async function guardarNotas() {
 
     // Verificar si alguna nota fue inválida
     if (notasInvalidas) {
+        button.disabled = false;
+        button.style.opacity = "1";
         return; // Detener la ejecución si hay notas inválidas
     }
 
     // Verificar si hay registros válidos antes de proceder
     if (notas.length === 0) {
         alert('No hay notas válidas para actualizar.');
+        button.disabled = false;
+        button.style.opacity = "1";
         return;
     }
 
@@ -224,12 +241,20 @@ async function guardarNotas() {
 
         if (response.ok) {
             alert('Notas actualizadas exitosamente.');
+
+            // Limpiar la tabla de notas después de la actualización exitosa
+            const tbody = document.querySelector('.attendance-table tbody');
+            tbody.innerHTML = ''; // Limpiar el contenido de la tabla
         } else {
             throw new Error('Error al actualizar las notas');
         }
     } catch (error) {
         console.error('Error al guardar las notas:', error);
         alert('Hubo un error al intentar actualizar las notas.');
+    } finally {
+        // Habilitar el botón nuevamente y restaurar su opacidad
+        button.disabled = false;
+        button.style.opacity = "1";
     }
 }
 

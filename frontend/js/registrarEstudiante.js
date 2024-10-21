@@ -61,6 +61,10 @@ async function cargarSecciones() {
 async function registrarEstudiante(event) {
     event.preventDefault(); // Evitar que se recargue la página al enviar el formulario
 
+    const button = document.querySelector('.register-button'); // Asumiendo que el botón tiene esta clase
+    button.disabled = true; // Deshabilitar el botón
+    button.style.opacity = "0.5"; // Atenuar el botón
+
     // Obtener los valores de los inputs
     const primerNombre = document.getElementById('primerNombre').value;
     const segundoNombre = document.getElementById('segundoNombre').value;
@@ -76,6 +80,8 @@ async function registrarEstudiante(event) {
     // Validar que los campos requeridos no estén vacíos
     if (!primerNombre || !primerApellido || !claveAlumno || !idGrado || !idSeccion || !cicloEscolar || !correoElectronico) {
         alert("Por favor, llene todos los campos obligatorios.");
+        button.disabled = false;
+        button.style.opacity = "1"; // Restaurar el botón
         return;
     }
 
@@ -83,6 +89,8 @@ async function registrarEstudiante(event) {
     const nombreApellidoRegex = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]+$/;
     if (!nombreApellidoRegex.test(primerNombre) || !nombreApellidoRegex.test(primerApellido)) {
         alert("El primer nombre y el primer apellido solo deben contener letras.");
+        button.disabled = false;
+        button.style.opacity = "1"; // Restaurar el botón
         return;
     }
 
@@ -91,12 +99,16 @@ async function registrarEstudiante(event) {
         (tercerNombre && !nombreApellidoRegex.test(tercerNombre)) || 
         (segundoApellido && !nombreApellidoRegex.test(segundoApellido))) {
         alert("Todos los nombres y apellidos solo deben contener letras.");
+        button.disabled = false;
+        button.style.opacity = "1"; // Restaurar el botón
         return;
     }
 
     // Validar que la clave del alumno solo contenga números
     if (isNaN(claveAlumno)) {
         alert("La clave del alumno debe ser un número.");
+        button.disabled = false;
+        button.style.opacity = "1"; // Restaurar el botón
         return;
     }
 
@@ -104,6 +116,8 @@ async function registrarEstudiante(event) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(correoElectronico)) {
         alert("Por favor, ingrese un correo electrónico válido.");
+        button.disabled = false;
+        button.style.opacity = "1"; // Restaurar el botón
         return;
     }
 
@@ -135,13 +149,17 @@ async function registrarEstudiante(event) {
 
         if (response.ok) {
             alert("Estudiante registrado exitosamente.");
-            document.querySelector('.register-form').reset();
+            document.querySelector('.register-form').reset(); // Limpiar el formulario
         } else {
             alert("Error al registrar el estudiante: " + result.message);
         }
     } catch (error) {
         console.error("Error al registrar el estudiante:", error);
         alert("Hubo un error al intentar registrar el estudiante.");
+    } finally {
+        // Habilitar el botón nuevamente y restaurar su opacidad
+        button.disabled = false;
+        button.style.opacity = "1";
     }
 }
 

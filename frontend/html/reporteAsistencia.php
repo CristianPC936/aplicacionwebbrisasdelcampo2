@@ -70,12 +70,12 @@ verificar_acceso('Administrador');
 
                 <div class="parameter">
                     <label for="from">Desde:</label>
-                    <input type="date" id="from" value="2024-05-01">
+                    <input type="date" id="from">
                 </div>
 
                 <div class="parameter">
                     <label for="to">Hasta:</label>
-                    <input type="date" id="to" value="2024-05-31">
+                    <input type="date" id="to">
                 </div>
 
                 <!-- Botón para generar el reporte -->

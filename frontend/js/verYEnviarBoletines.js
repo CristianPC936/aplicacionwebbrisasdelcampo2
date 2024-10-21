@@ -116,6 +116,14 @@ async function cargarEstudiantes() {
 }
 
 async function cargarBoletin() {
+    const button = document.querySelector('.search-button');
+    button.disabled = true; // Deshabilitar el botón
+    button.style.opacity = "0.5"; // Atenuar el botón
+
+    // Limpiar la tabla antes de llenarla con las nuevas notas
+    const tbody = document.querySelector('.attendance-table tbody');
+    tbody.innerHTML = '';
+
     const studentSelect = document.getElementById('student');
     const gradeSelect = document.getElementById('grade');
     const sectionSelect = document.getElementById('section');
@@ -144,10 +152,6 @@ async function cargarBoletin() {
         }
 
         const boletin = await response.json();
-
-        // Limpiar la tabla antes de llenarla con las nuevas notas
-        const tbody = document.querySelector('.attendance-table tbody');
-        tbody.innerHTML = '';
 
         // Crear filas en la tabla para cada curso y sus notas por bimestre
         const cursosAgrupados = agruparNotasPorCurso(boletin);
@@ -180,8 +184,14 @@ async function cargarBoletin() {
 
     } catch (error) {
         console.error('Error al cargar el boletín:', error);
+    } finally {
+        // Habilitar el botón nuevamente y restaurar su opacidad
+        button.disabled = false;
+        button.style.opacity = "1";
     }
 }
+
+document.querySelector('.search-button').addEventListener('click', cargarBoletin);
 
 // Función auxiliar para agrupar las notas por curso y bimestre
 function agruparNotasPorCurso(boletin) {
@@ -205,7 +215,12 @@ function agruparNotasPorCurso(boletin) {
 }
 
 // Función para generar el reporte de boletín en PDF
+// Función para generar el reporte de boletín en PDF
 async function generarReporteBoletin() {
+    const button = document.querySelector('.save-button');
+    button.disabled = true; // Deshabilitar el botón
+    button.style.opacity = "0.5"; // Atenuar el botón
+
     const studentSelect = document.getElementById('student');
     const gradeSelect = document.getElementById('grade');
     const sectionSelect = document.getElementById('section');
@@ -234,12 +249,20 @@ async function generarReporteBoletin() {
 
         if (result.status === 'success') {
             alert(result.message); // Mostrar mensaje de éxito
+
+            // Limpiar la tabla después de generar el reporte exitosamente
+            const tbody = document.querySelector('.attendance-table tbody');
+            tbody.innerHTML = ''; // Limpiar el contenido de la tabla
         } else {
             alert('Error: ' + result.message); // Mostrar mensaje de error
         }
     } catch (error) {
         console.error('Error al generar el reporte:', error);
         alert('Error al generar el reporte.');
+    } finally {
+        // Habilitar el botón nuevamente y restaurar su opacidad
+        button.disabled = false;
+        button.style.opacity = "1";
     }
 }
 
@@ -255,9 +278,6 @@ window.addEventListener('load', function() {
     cargarGrados();
     cargarSecciones();
 });
-
-// Asignar la función al botón de buscar boletín
-document.querySelector('.search-button').addEventListener('click', cargarBoletin);
 
 document.addEventListener('DOMContentLoaded', function () {
     const userFooterBtn = document.getElementById('toggleDropdown');

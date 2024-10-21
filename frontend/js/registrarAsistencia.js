@@ -57,14 +57,35 @@ async function cargarSecciones() {
     }
 }
 
+function establecerFechaActual() {
+    const hoy = new Date();
+    const dia = String(hoy.getDate()).padStart(2, '0'); // Día en formato de dos dígitos
+    const mes = String(hoy.getMonth() + 1).padStart(2, '0'); // Mes en formato de dos dígitos (los meses en JS van de 0 a 11)
+    const anio = hoy.getFullYear(); // Año actual
+
+    const fechaFormateada = `${anio}-${mes}-${dia}`; // Formato de fecha en YYYY-MM-DD
+
+    // Establecer la fecha actual en el input
+    document.getElementById('date').value = fechaFormateada;
+}
+
 // Usar addEventListener para que ambas funciones se ejecuten al cargar la página
 window.addEventListener('load', function() {
     cargarGrados();
     cargarSecciones();
+    establecerFechaActual();
 });
 
 // Función para listar asistencia y realizar las solicitudes fetch
 async function listarAsistencia() {
+    const button = document.querySelector('.search-button');
+    button.disabled = true;
+    button.style.opacity = "0.5";
+
+    // Limpiar la tabla de asistencia antes de llenarla
+    const tbody = document.querySelector('.attendance-table tbody');
+    tbody.innerHTML = ''; // Limpiar cualquier fila previa
+
     const idGrado = document.getElementById('grade').value;
     const idSeccion = document.getElementById('section').value;
     const fecha = document.getElementById('date').value;
@@ -105,10 +126,6 @@ async function listarAsistencia() {
         }
 
         const tiposAsistencia = await responseTipoAsistencia.json();
-
-        // Limpiar la tabla de asistencia antes de llenarla
-        const tbody = document.querySelector('.attendance-table tbody');
-        tbody.innerHTML = ''; // Limpiar cualquier fila previa
 
         // Iterar sobre los alumnos y crear filas para la tabla
         alumnos.forEach(alumno => {
@@ -156,10 +173,18 @@ async function listarAsistencia() {
         });
     } catch (error) {
         console.error('Error al listar la asistencia:', error);
+    } finally {
+        // Esto siempre se ejecutará, independientemente de lo que pase en el try
+        button.disabled = false;
+        button.style.opacity = "1";
     }
 }
 
 function guardarAsistencia() {
+    const button = document.querySelector('.save-button');
+    button.disabled = true;
+    button.style.opacity = "0.5"; // Atenuar el botón
+
     const fecha = document.getElementById('date').value;
     const tbody = document.querySelector('.attendance-table tbody');
     const registrosAsistencia = [];
@@ -201,10 +226,16 @@ function guardarAsistencia() {
     })
     .then(data => {
         alert('Asistencia registrada exitosamente');
+        tbody.innerHTML = '';
     })
     .catch(error => {
         console.error('Error al registrar la asistencia:', error);
         alert('No se pudo registrar la asistencia');
+    })
+    .finally(() => {
+        // Habilitar el botón nuevamente después de que la operación finalice
+        button.disabled = false;
+        button.style.opacity = "1"; // Restaurar la opacidad del botón
     });
 }
 

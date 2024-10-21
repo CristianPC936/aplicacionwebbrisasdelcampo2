@@ -107,6 +107,14 @@ document.querySelector('.search-button').addEventListener('click', listarNotas);
 
 // Función para listar las notas y realizar las solicitudes fetch
 async function listarNotas() {
+    const button = document.querySelector('.search-button');
+    button.disabled = true; // Deshabilitar el botón
+    button.style.opacity = "0.5"; // Atenuar el botón
+
+    // Limpiar la tabla de notas antes de llenarla
+    const tbody = document.querySelector('.attendance-table tbody');
+    tbody.innerHTML = ''; // Limpiar cualquier fila previa
+
     const idGrado = document.getElementById('grade').value;
     const idSeccion = document.getElementById('section').value;
     const idCurso = document.getElementById('course').value;
@@ -138,10 +146,6 @@ async function listarNotas() {
         }
         
         const alumnos = await responseAlumno.json();
-
-        // Limpiar la tabla de notas antes de llenarla
-        const tbody = document.querySelector('.attendance-table tbody');
-        tbody.innerHTML = ''; // Limpiar cualquier fila previa
 
         // Iterar sobre los alumnos y crear filas para la tabla
         alumnos.forEach(alumno => {
@@ -185,10 +189,18 @@ async function listarNotas() {
         });
     } catch (error) {
         console.error('Error al listar las notas:', error);
+    } finally {
+        // Habilitar el botón nuevamente y restaurar su opacidad
+        button.disabled = false;
+        button.style.opacity = "1";
     }
 }
 
 async function guardarNotas() {
+    const button = document.querySelector('.save-button');
+    button.disabled = true; // Deshabilitar el botón
+    button.style.opacity = "0.5"; // Atenuar el botón
+
     const tbody = document.querySelector('.attendance-table tbody');
     const registrosNotas = [];
     let notasInvalidas = false; // Variable para marcar si alguna nota es inválida
@@ -226,12 +238,16 @@ async function guardarNotas() {
 
     // Verificar si alguna nota fue inválida
     if (notasInvalidas) {
+        button.disabled = false;
+        button.style.opacity = "1";
         return; // Detener la ejecución si hay notas inválidas
     }
 
     // Verificar si hay registros válidos antes de proceder
     if (registrosNotas.length === 0) {
         alert('No hay notas válidas para registrar.');
+        button.disabled = false;
+        button.style.opacity = "1";
         return;
     }
 
@@ -256,9 +272,14 @@ async function guardarNotas() {
 
         const data = await response.json();
         alert('Notas registradas exitosamente');
+        tbody.innerHTML = ''; // Limpiar el contenido de la tabla
     } catch (error) {
         console.error('Error al registrar las notas:', error);
         alert('No se pudo registrar las notas');
+    } finally {
+        // Habilitar el botón nuevamente y restaurar su opacidad
+        button.disabled = false;
+        button.style.opacity = "1";
     }
 }
 

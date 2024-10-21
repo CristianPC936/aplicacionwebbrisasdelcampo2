@@ -70,6 +70,10 @@ function actualizarEncabezados(opcion) {
 
 // Función para buscar docentes asignados
 async function buscarDocentesAsignados() {
+    const button = document.querySelector('.search-button'); // Seleccionar el botón de búsqueda
+    button.disabled = true; // Deshabilitar el botón
+    button.style.opacity = "0.5"; // Atenuar el botón
+
     try {
         const response = await fetch('../../backend/buscarDocentesAsignados.php');
         if (!response.ok) {
@@ -116,11 +120,19 @@ async function buscarDocentesAsignados() {
     } catch (error) {
         console.error('Error al buscar los docentes asignados:', error);
         alert('Hubo un error al buscar los docentes asignados.');
+    } finally {
+        // Habilitar el botón nuevamente y restaurar su opacidad
+        button.disabled = false;
+        button.style.opacity = "1";
     }
 }
 
 // Función para buscar docentes no asignados
 async function buscarDocentesNoAsignados() {
+    const button = document.querySelector('.search-button'); // Seleccionar el botón de búsqueda
+    button.disabled = true; // Deshabilitar el botón
+    button.style.opacity = "0.5"; // Atenuar el botón
+
     try {
         const response = await fetch('../../backend/buscarDocentesNoAsignados.php');
         if (!response.ok) {
@@ -129,7 +141,7 @@ async function buscarDocentesNoAsignados() {
 
         const docentes = await response.json();
         const tbody = document.getElementById('docentesTableBody');
-        tbody.innerHTML = ''; // Limpia el contenido de la tabla
+        tbody.innerHTML = ''; // Limpiar el contenido de la tabla
 
         docentes.forEach(docente => {
             const fila = document.createElement('tr');
@@ -174,6 +186,10 @@ async function buscarDocentesNoAsignados() {
     } catch (error) {
         console.error('Error al buscar los docentes no asignados:', error);
         alert('Hubo un error al buscar los docentes no asignados.');
+    } finally {
+        // Habilitar el botón nuevamente y restaurar su opacidad
+        button.disabled = false;
+        button.style.opacity = "1";
     }
 }
 
@@ -269,6 +285,10 @@ async function cargarSecciones() {
 }
 
 document.querySelector('.assign-button-confirm').addEventListener('click', async function () {
+    const button = document.querySelector('.assign-button-confirm'); // Seleccionar el botón de confirmación de asignación
+    button.disabled = true; // Deshabilitar el botón
+    button.style.opacity = "0.5"; // Atenuar el botón
+
     const idUsuario = document.getElementById('idUsuarioModal').value; // El idUsuario está en el modal ahora
     const idGrado = document.getElementById('grade').value;
     const idSeccion = document.getElementById('section').value;
@@ -292,12 +312,17 @@ document.querySelector('.assign-button-confirm').addEventListener('click', async
         if (result.success) {
             alert('Docente asignado correctamente');
             closeAssignModal(); // Cierra el modal
+            buscarDocentesNoAsignados();
         } else {
             alert(result.message);
         }
     } catch (error) {
         console.error('Error al asignar el docente:', error);
         alert('Hubo un error al asignar el docente.');
+    } finally {
+        // Habilitar el botón nuevamente y restaurar su opacidad
+        button.disabled = false;
+        button.style.opacity = "1";
     }
 });
 
