@@ -114,9 +114,6 @@ verificar_acceso('Docente');
                 
                 <label for="edit-segundoApellido">Segundo Apellido:</label>
                 <input type="text" id="edit-segundoApellido">
-                
-                <label for="edit-correoElectronico">Correo Electrónico:</label>
-                <input type="email" id="edit-correoElectronico" required>
 
                 <button type="button" class="cancel-button">Cancelar</button>
                 <button type="button" class="save-button">Guardar cambios</button>
@@ -134,7 +131,6 @@ verificar_acceso('Docente');
                 <p><strong>Tercer Nombre:</strong> <span id="delete-tercerNombre"></span></p>
                 <p><strong>Primer Apellido:</strong> <span id="delete-primerApellido"></span></p>
                 <p><strong>Segundo Apellido:</strong> <span id="delete-segundoApellido"></span></p>
-                <p><strong>Correo Electrónico:</strong> <span id="delete-correoElectronico"></span></p>
                 <p><strong>Clave:</strong> <span id="delete-claveAlumno"></span></p>
             </div>
             <button class="cancel-button-delete">Cancelar</button>

@@ -203,7 +203,6 @@ function openEditModal(student) {
     form.querySelector('#edit-tercerNombre').value = student.tercerNombre || '';
     form.querySelector('#edit-primerApellido').value = student.primerApellido;
     form.querySelector('#edit-segundoApellido').value = student.segundoApellido || '';
-    form.querySelector('#edit-correoElectronico').value = student.correoElectronico || '';
 
     // Mostrar el modal agregando la clase 'show'
     modal.classList.add('show');
@@ -234,7 +233,6 @@ function openDeleteModal(student) {
     document.getElementById('delete-tercerNombre').textContent = student.tercerNombre || '';
     document.getElementById('delete-primerApellido').textContent = student.primerApellido;
     document.getElementById('delete-segundoApellido').textContent = student.segundoApellido || '';
-    document.getElementById('delete-correoElectronico').textContent = student.correoElectronico || '';
     document.getElementById('delete-claveAlumno').textContent = student.claveAlumno;
 
     // Show the modal
@@ -275,11 +273,9 @@ async function guardarCambios(idAlumno) {
     const tercerNombre = form.querySelector('#edit-tercerNombre').value;
     const primerApellido = form.querySelector('#edit-primerApellido').value;
     const segundoApellido = form.querySelector('#edit-segundoApellido').value;
-    const correoElectronico = form.querySelector('#edit-correoElectronico').value;
 
     // Expresión regular para permitir solo letras (incluyendo tildes y ñ) y espacios
     const nameRegex = /^[A-Za-zÀ-ÿ\s]+$/;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     // Validación de primer nombre
     if (!primerNombre || !nameRegex.test(primerNombre)) {
@@ -321,14 +317,6 @@ async function guardarCambios(idAlumno) {
         return;
     }
 
-    // Validación del correo electrónico
-    if (!correoElectronico || !emailRegex.test(correoElectronico)) {
-        alert('Por favor ingrese un correo electrónico válido.');
-        button.disabled = false; // Restaurar el botón
-        button.style.opacity = "1";
-        return;
-    }
-
     // Crear objeto JSON con los datos del estudiante
     const estudiante = {
         idAlumno: idAlumno,
@@ -336,8 +324,7 @@ async function guardarCambios(idAlumno) {
         segundoNombre: segundoNombre || '',
         tercerNombre: tercerNombre || '',
         primerApellido: primerApellido,
-        segundoApellido: segundoApellido || '',
-        correoElectronico: correoElectronico
+        segundoApellido: segundoApellido || ''
     };
 
     try {

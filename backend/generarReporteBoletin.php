@@ -1,19 +1,15 @@
 <?php
 require_once 'config.php'; // Incluir la conexión a la base de datos
 require('../lib/fpdf/fpdf.php'); // Asegúrate de tener FPDF instalado
-require '../lib/PHPmailer/src/PHPMailer.php'; // Incluir PHPMailer para enviar el correo
-require '../lib/PHPmailer/src/SMTP.php';
-require '../lib/PHPmailer/src/Exception.php';
-
-// Usar los namespaces de PHPMailer
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 
 // Verifica si los datos se han enviado correctamente
 $data = json_decode(file_get_contents('php://input'), true);
 
 if (!$data) {
-    die('No se recibieron datos para generar el reporte');
+    header('Content-Type: application/json');
+    http_response_code(400);
+    echo json_encode(['error' => 'No se recibieron datos para generar el reporte']);
+    exit;
 }
 
 $idAlumno = isset($data['idAlumno']) ? $data['idAlumno'] : null;
@@ -21,12 +17,15 @@ $idGrado = isset($data['idGrado']) ? $data['idGrado'] : null;
 $cicloEscolar = isset($data['cicloEscolar']) ? $data['cicloEscolar'] : null;
 
 if (empty($idAlumno) || empty($idGrado) || empty($cicloEscolar)) {
-    die('Faltan datos para generar el reporte');
+    header('Content-Type: application/json');
+    http_response_code(400);
+    echo json_encode(['error' => 'Faltan datos para generar el reporte']);
+    exit;
 }
 
-// Obtener el nombre completo del estudiante, grado, sección y correo electrónico
+// Obtener el nombre completo del estudiante, grado, sección
 $sqlEstudiante = "
-    SELECT A.primerNombre, A.segundoNombre, A.tercerNombre, A.primerApellido, A.segundoApellido, A.correoElectronico, G.nombreGrado, S.nombreSeccion 
+    SELECT A.primerNombre, A.segundoNombre, A.tercerNombre, A.primerApellido, A.segundoApellido, G.nombreGrado, S.nombreSeccion 
     FROM Alumno A 
     JOIN Grado G ON A.idGrado = G.idGrado
     JOIN Seccion S ON A.idSeccion = S.idSeccion
@@ -41,7 +40,6 @@ $estudiante = $resultEstudiante->fetch_assoc();
 $nombreEstudiante = $estudiante['primerNombre'] . ' ' . $estudiante['segundoNombre'] . ' ' . $estudiante['tercerNombre'] . ' ' . $estudiante['primerApellido'] . ' ' . $estudiante['segundoApellido'];
 $nombreGrado = $estudiante['nombreGrado'];
 $nombreSeccion = $estudiante['nombreSeccion'];
-$correoElectronico = $estudiante['correoElectronico']; // Obtener el correo electrónico del alumno
 $stmtEstudiante->close();
 
 // Consulta SQL para obtener los cursos y las notas del estudiante en los 4 bimestres
@@ -93,7 +91,7 @@ $pdf->Cell(0, 10, utf8_decode('Sección: ' . $nombreSeccion), 0, 1, 'L');
 // Espacio antes de la tabla
 $pdf->Ln(0);
 
-// Ajuste de las columnas para no exceder los márgenes (ancho total disponible: 280mm - 20mm de márgenes = 260mm)
+// Ajuste de las columnas para no exceder los márgenes
 $anchoAsignatura = 82; // Ancho para la columna "Asignatura"
 $anchoBimestre = 30; // Ancho para cada bimestre
 $anchoTotal = 20; // Ancho para la columna "Total"
@@ -126,15 +124,14 @@ foreach ($notasPorCurso as $curso => $detalle) {
     $sumaNotas = 0;
     $cantidadNotas = 0;
 
-    // Agregar fila de asignatura (siempre en negro)
-    $pdf->SetTextColor(0, 0, 0); // Color fijo para el texto de las asignaturas
+    // Agregar fila de asignatura
+    $pdf->SetTextColor(0, 0, 0);
     $pdf->Cell($anchoAsignatura, 8, utf8_decode($curso), 1);
 
     // Calcular y mostrar notas de los 4 bimestres
     for ($i = 1; $i <= 4; $i++) {
         $nota = isset($notas[$i]) ? $notas[$i] : '';
 
-        // Verificar si la nota es menor a 60 para mostrar el texto en rojo
         if ($nota !== '') {
             if ($nota < 60) {
                 $pdf->SetTextColor(255, 0, 0); // Rojo para notas menores a 60
@@ -166,11 +163,11 @@ foreach ($notasPorCurso as $curso => $detalle) {
 
     // Mostrar si el estudiante aprobó o no
     if ($cantidadNotas === 4) {
-        $pdf->SetTextColor(0, 0, 0); // Negro para aprobado
         if ($promedioAsignatura < 60) {
             $pdf->SetTextColor(255, 0, 0); // Rojo para no aprobado
             $pdf->Cell($anchoAprobado, 8, 'No Aprobado', 1, 0, 'C');
         } else {
+            $pdf->SetTextColor(0, 0, 0); // Negro para aprobado
             $pdf->Cell($anchoAprobado, 8, 'Aprobado', 1, 0, 'C');
         }
     } else {
@@ -186,7 +183,6 @@ $pdf->Cell($anchoAsignatura, 8, 'PROMEDIO', 1);
 for ($i = 0; $i < 4; $i++) {
     $promedioBimestre = $promedios[$i] > 0 ? round($promedios[$i] / $totalCursos, 2) : '';
 
-    // Verificar si el promedio es menor a 60 y aplicar el color rojo si es necesario
     if ($promedioBimestre < 60 && $promedioBimestre !== '') {
         $pdf->SetTextColor(255, 0, 0); // Rojo para promedios menores a 60
     } else {
@@ -199,7 +195,6 @@ for ($i = 0; $i < 4; $i++) {
 // Calcular el promedio total final
 $totalPromedioFinal = round(array_sum($totalPromedios) / count($totalPromedios), 2);
 
-// Verificar si el promedio total es menor a 60
 if ($totalPromedioFinal < 60) {
     $pdf->SetTextColor(255, 0, 0); // Rojo si el promedio total es menor a 60
 } else {
@@ -211,49 +206,8 @@ $pdf->Cell($anchoTotal, 8, $totalPromedioFinal, 1, 0, 'C');
 // No se necesita mostrar "Aprobado / No Aprobado" en la fila de promedio
 $pdf->Cell($anchoAprobado, 8, '', 1, 0, 'C');
 
-// Guardar el archivo PDF en un archivo temporal
-$pdfFilePath = '/tmp/reporte_boletin.pdf';
-$pdf->Output('F', $pdfFilePath); // Guardar el archivo PDF temporalmente
-
-// Enviar el PDF por correo
-$mail = new PHPMailer(true); // Crear una nueva instancia de PHPMailer
-
-try {
-    // Configuración del servidor SMTP de Gmail
-    $mail->isSMTP();                                    // Usar SMTP
-    $mail->Host = 'smtp.gmail.com';                     // Servidor SMTP de Gmail
-    $mail->SMTPAuth = true;                             // Habilitar autenticación SMTP
-    $mail->Username = 'cristianpalacios935@gmail.com';  // Tu correo de Gmail
-    $mail->Password = 'slai ajhh hgcv pyct';            // Contraseña de tu correo de Gmail
-    $mail->SMTPSecure = 'tls';                          // Habilitar encriptación TLS
-    $mail->Port = 587;                                  // Puerto SMTP para TLS
-
-    // Configuración del remitente y destinatario
-    $mail->setFrom('cristianpalacios935@gmail.com', 'Escuela Oficial Rural Mixta Sector Brisas del Campo');   
-    $mail->addAddress($correoElectronico, $nombreEstudiante); // Usar el correo electrónico del alumno como destinatario
-
-    // Configuración del contenido del correo
-    $mail->isHTML(true);                                
-    $mail->Subject = 'Entrega de boletin de calificaciones';       
-    $mail->Body = "
-        <p>Estimado padre de familia,</p>
-        <p>Le informamos que adjunto a este correo se encuentra el boletín de calificaciones del estudiante <strong>$nombreEstudiante</strong>, perteneciente al grado <strong>$nombreGrado</strong> y sección <strong>$nombreSeccion</strong>.</p>
-        <p>Le deseamos un buen día y quedamos atentos ante cualquier consulta.</p>
-        <p>Atentamente,</p>
-        <p>Escuela Oficial Rural Mixta Sector Brisas del Campo Zona 10</p>
-    ";  
-    $mail->AltBody = 'Adjunto se encuentra el boletín de calificaciones del estudiante.'; 
-
-    // Adjuntar el archivo PDF generado
-    $mail->addAttachment($pdfFilePath, 'Boletin.pdf');
-
-    // Enviar el correo
-    $mail->send();
-    echo json_encode(['status' => 'success', 'message' => 'El boletín ha sido enviado correctamente por correo electrónico']);
-} catch (Exception $e) {
-    echo json_encode(['status' => 'error', 'message' => "No se pudo enviar el correo. Error: {$mail->ErrorInfo}"]);
-}
-
-// Eliminar el archivo PDF temporal después de enviarlo
-unlink($pdfFilePath);
+// Salida del PDF al navegador
+header('Content-Type: application/pdf');
+header('Content-Disposition: inline; filename="Boletin.pdf"');
+$pdf->Output('I', 'Boletin.pdf');
 ?>

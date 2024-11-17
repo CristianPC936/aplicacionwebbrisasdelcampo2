@@ -245,17 +245,21 @@ async function generarReporteBoletin() {
             body: JSON.stringify(data)
         });
 
-        const result = await response.json();
+        // Verificar si la respuesta es un PDF
+        const contentType = response.headers.get('Content-Type');
+        if (contentType && contentType.includes('application/pdf')) {
+            // Obtener el PDF como blob
+            const blob = await response.blob();
 
-        if (result.status === 'success') {
-            alert(result.message); // Mostrar mensaje de éxito
-
-            // Limpiar la tabla después de generar el reporte exitosamente
-            const tbody = document.querySelector('.attendance-table tbody');
-            tbody.innerHTML = ''; // Limpiar el contenido de la tabla
+            // Crear una URL para el blob y abrirla en una nueva pestaña
+            const url = window.URL.createObjectURL(blob);
+            window.open(url, '_blank');
         } else {
-            alert('Error: ' + result.message); // Mostrar mensaje de error
+            // Si no es un PDF, intentar obtener el mensaje de error en JSON
+            const result = await response.json();
+            alert('Error: ' + result.error);
         }
+
     } catch (error) {
         console.error('Error al generar el reporte:', error);
         alert('Error al generar el reporte.');
